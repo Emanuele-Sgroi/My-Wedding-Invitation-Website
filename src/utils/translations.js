@@ -60,7 +60,7 @@ const translations = {
             title: "Ceremony Begins",
           },
           dinner: {
-            time: "5:00 PM",
+            time: "6:00 PM",
             title: "Dinner Served",
           },
           dance: {
@@ -68,15 +68,15 @@ const translations = {
             title: "First Dance",
           },
           photo: {
-            time: "7:00 - 10:00 PM",
+            time: "8:00 - 11:00 PM",
             title: "Photo Booth",
           },
           pig: {
-            time: "10:30 PM",
+            time: "12:00 AM",
             title: "Special Dish",
           },
           cake_cutting: {
-            time: "12:00 AM",
+            time: "22:30 PM",
             title: "Cake Cutting",
           },
           games: {
@@ -97,7 +97,7 @@ const translations = {
             title: "After Party Starts",
           },
           vespa: {
-            time: "4:00 - 9:00 PM",
+            time: "3:00 - 8:00 PM",
             title: "Vespa Bar",
           },
           party_continues: {
@@ -105,7 +105,7 @@ const translations = {
             title: "Eat, Drink, Dance, Repeat!",
           },
           end: {
-            time: "10:00 PM",
+            time: "9:00 PM",
             title: "The End",
           },
         },
@@ -132,7 +132,7 @@ const translations = {
           },
           'Venue "Przy Patykach", Kolonia Łobudzice 18c, 97-425, Poland.',
         ],
-         button_loc:"SEE THE VENUE"
+        button_loc: "SEE THE VENUE",
       },
       accommodations: {
         title: "Accommodations",
@@ -142,13 +142,16 @@ const translations = {
             bold: true,
             text: "Friday 25th of July, Saturday 26th of July, and Sunday 27th of July.",
           },
-          " If you need accommodation for additional days, please let us know, and we can help you arrange it with the venue.",
         ],
         breakfast: [
           { bold: true, text: "Breakfast" },
           " is included with your stay and will be served from ",
-          { bold: true, text: "9 AM to 11 AM" },
-          " each morning (this might change, please check the website closer to the wedding date).",
+          { bold: true, text: "9 AM to 12 PM" },
+          " each morning.",
+        ],
+        checkout: [
+          { bold: true, text: "Hotel/Apartment Checkout:" },
+          " The checkout is on Monday at 11:00 AM, please have your breakfast before then.",
         ],
       },
       travel_transport: {
@@ -168,6 +171,26 @@ const translations = {
         description_4: [
           "We will try our best to accommodate everyone. If you cannot land/depart at the same day/time as everyone else, we will help you organize another way of getting to and from the venue.",
         ],
+        transport_details: {
+          arrival: {
+            title: "Friday 25th of July",
+            desc1: [
+              { bold: true, text: "Warsaw Airport (WAW):" },
+              " Bus leaves around 7:30PM - Karolina will be waiting at the arrivals.",
+            ],
+            desc2: [
+              { bold: true, text: "Katowice Airport:" },
+              " Bus leaves around 5:00PM - Emanuele will be waiting at the arrivals.",
+            ],
+          },
+          departure: {
+            title: "Monday 28th of July",
+            desc1: [
+              { bold: true, text: "" },
+              " Buses for both airports leave at 12:00 PM",
+            ],
+          },
+        },
       },
       contact: {
         title: "Contact Us",
@@ -336,7 +359,7 @@ const translations = {
             title: "Inizio della Cerimonia",
           },
           dinner: {
-            time: "17:00",
+            time: "18:00",
             title: "Cena Servita",
           },
           dance: {
@@ -344,15 +367,15 @@ const translations = {
             title: "Primo Ballo",
           },
           photo: {
-            time: "19:00 - 22:00",
+            time: "20:00 - 23:00",
             title: "Cabina Fotografica",
           },
           pig: {
-            time: "22:30",
+            time: "00:00",
             title: "Piatto Speciale",
           },
           cake_cutting: {
-            time: "00:00",
+            time: "22:30",
             title: "Taglio della Torta",
           },
           games: {
@@ -373,7 +396,7 @@ const translations = {
             title: "Inizia L'After!",
           },
           vespa: {
-            time: "16:00 - 21:00",
+            time: "15:00 - 20:00",
             title: "Vespa Bar",
           },
           party_continues: {
@@ -381,7 +404,7 @@ const translations = {
             title: "Mangia, Bevi, Balla, Ripeti!",
           },
           end: {
-            time: "10:00 PM",
+            time: "21:00",
             title: "Finita La Commedia!",
           },
         },
@@ -405,7 +428,7 @@ const translations = {
           },
           'Agriturismo "Przy Patykach", Kolonia Łobudzice 18c, 97-425, Polonia',
         ],
-        button_loc:"VISITA IL LUOGO"
+        button_loc: "VISITA IL LOCALE",
       },
       accommodations: {
         title: "Alloggi",
@@ -415,13 +438,16 @@ const translations = {
             bold: true,
             text: "Venerdì 25, Sabato 26 e Domenica 27 Luglio.",
           },
-          " L'hotel si trova nella stessa location. Facci sapere se vuoi restare per piú notti e ti aiuteremo con la prenotazione.",
         ],
         breakfast: [
           { bold: true, text: "La colazione" },
           " è inclusa con il soggiorno e verrà servita dalle ",
-          { bold: true, text: "9:00 alle 11:00" },
-          " ogni mattina (Qualora l'orario cambiasse, questo sito verrà aggiornato).",
+          { bold: true, text: "9:00 alle 12:00" },
+          " ogni mattina.",
+        ],
+        checkout: [
+          { bold: true, text: "Hotel/Appartamenti Checkout:" },
+          " Il checkout é il Lunedí alle 11:00, perfavore fate colazione prima.",
         ],
       },
       travel_transport: {
@@ -441,6 +467,26 @@ const translations = {
         description_4: [
           "Faremo del nostro meglio per accontentare tutti. Se non riuscite ad arrivare o partire nello stesso giorno e/o orario degli altri, vi aiuteremo a organizzare un altro modo per raggiungere e lasciare la location.",
         ],
+        transport_details: {
+          arrival: {
+            title: "Venerdí 25 Luglio",
+            desc1: [
+              { bold: true, text: "Aereoporto di Varsavia (WAW):" },
+              " Le navette partono intorno le 19:30 - Karolina vi aspetterá agli arrivi.",
+            ],
+            desc2: [
+              { bold: true, text: "Aereoporto di Katowice:" },
+              " Le navette partono intorno le 17:00 - Emanuele vi aspetterá agli arrivi.",
+            ],
+          },
+          departure: {
+            title: "Lunedí 28 luglio",
+            desc1: [
+              { bold: true, text: "" },
+              " Le navette per entrambi gli aereoporti partono alle 12:00.",
+            ],
+          },
+        },
       },
       contact: {
         title: "Contattaci",
@@ -613,7 +659,7 @@ const translations = {
             title: "Ceremonia Ślubu",
           },
           dinner: {
-            time: "17:00",
+            time: "18:00",
             title: "Uroczysty Obiad",
           },
           dance: {
@@ -621,15 +667,15 @@ const translations = {
             title: "Pierwszy Taniec",
           },
           photo: {
-            time: "19:00 - 22:00",
+            time: "20:00 - 23:00",
             title: "Fotobudka",
           },
           pig: {
-            time: "22:30",
+            time: "00:00",
             title: "Danie Specjalne",
           },
           cake_cutting: {
-            time: "00:00",
+            time: "22:30",
             title: "Tort",
           },
           games: {
@@ -650,7 +696,7 @@ const translations = {
             title: "Rozpoczęcie Poprawin",
           },
           vespa: {
-            time: "16:00 - 21:00",
+            time: "15:00 - 20:00",
             title: "Bar Vespa",
           },
           party_continues: {
@@ -658,7 +704,7 @@ const translations = {
             title: "Jedzenie, Picie, i Zabawa!",
           },
           end: {
-            time: "10:00 PM",
+            time: "21:00",
             title: "Koniec",
           },
         },
@@ -685,7 +731,7 @@ const translations = {
           },
           'Sala "Przy Patykach", Kolonia Łobudzice 18c, 97-425',
         ],
-        button_loc:"ZOBACZ LOKALIZACJĘ"
+        button_loc: "ZOBACZ LOKALIZACJĘ",
       },
       accommodations: {
         title: "Zakwaterowanie",
@@ -700,9 +746,10 @@ const translations = {
         breakfast: [
           { bold: true, text: "Śniadanie" },
           " jest wliczone w cenę pobytu i będzie serwowane od ",
-          { bold: true, text: "9:00 do 11:00" },
-          " każdego ranka (podane godziny mogą ulec zmianie, prosimy zaglądać na stronę bliżej daty ślubu).",
+          { bold: true, text: "9:00 do 12:00" },
+          " każdego ranka.",
         ],
+        checkout: [{ bold: true, text: "" }, ""],
       },
       travel_transport: {
         title: "Transport",
@@ -719,6 +766,23 @@ const translations = {
         description_4: [
           "Dołożymy wszelkich starań, aby zadowolić każdego. Jeśli nie możesz wylądować/wylecieć tego samego dnia/godziny co wszyscy inni, pomożemy Ci zorganizować inny sposób dotarcia na miejsce i z powrotem.",
         ],
+        transport_details: {
+          arrival: {
+            title: "Friday 25th of July",
+            desc1: [
+              { bold: true, text: "Warsaw Airport (WAW):" },
+              "Bus leaves around 7:30PM - Karolina will be waiting at the arrivals.",
+            ],
+            desc2: [
+              { bold: true, text: "Katowice Airport:" },
+              "Bus leaves around 5:00PM - Emanuele will be waiting at the arrivals.",
+            ],
+          },
+          departure: {
+            title: "",
+            desc1: [{ bold: true, text: "" }, ""],
+          },
+        },
       },
       contact: {
         title: "Skontaktuj się z Nami",

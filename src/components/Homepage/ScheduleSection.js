@@ -44,25 +44,25 @@ const ScheduleSection = ({ language }) => {
           title: day_1.events.dinner.title,
           icon: "/icons/dinner.svg",
         },
-        {
-          time: day_1.events.dance.time,
-          title: day_1.events.dance.title,
-          icon: "/icons/dance.svg",
-        },
+        // {
+        //   time: day_1.events.dance.time,
+        //   title: day_1.events.dance.title,
+        //   icon: "/icons/dance.svg",
+        // },
         {
           time: day_1.events.photo.time,
           title: day_1.events.photo.title,
           icon: "/icons/photobooth.svg",
         },
         {
-          time: day_1.events.pig.time,
-          title: day_1.events.pig.title,
-          icon: "/icons/dish.svg",
-        },
-        {
           time: day_1.events.cake_cutting.time,
           title: day_1.events.cake_cutting.title,
           icon: "/icons/cake.svg",
+        },
+        {
+          time: day_1.events.pig.time,
+          title: day_1.events.pig.title,
+          icon: "/icons/dish.svg",
         },
         {
           time: day_1.events.games.time,
