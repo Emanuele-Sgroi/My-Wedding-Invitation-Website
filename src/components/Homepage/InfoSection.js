@@ -87,17 +87,7 @@ const InfoSection = ({ language }) => {
           <p translate="no" className="mt-[-16px]">
             {details.location.map((item, index) =>
               typeof item === "string" ? (
-<<<<<<< HEAD
-                <span
-                  key={index}
-                
-             
-                >
-                  {item}
-                </span>
-=======
                 <span key={index}>{item}</span>
->>>>>>> 6122174 (Made few changes, as the wedding date is getting closer :))
               ) : (
                 <span key={index} className="font-bold">
                   {item.text}
@@ -107,18 +97,6 @@ const InfoSection = ({ language }) => {
           </p>
 
           <Link
-<<<<<<< HEAD
-                  href={`https://przypatykach.pl/`}
-                  target="_blank"
-                  className="flex justify-center items-center gap-1 border border-gold rounded-lg px-2 py-1 mt-2 font-light text-sm"
-                >
-                  <Image src={images.location} alt="Location" className="w-auto h-[25px]"/>{details.button_loc}
-                </Link>
-
-        </div>
-        
-     
-=======
             href={`https://przypatykach.pl/`}
             target="_blank"
             className="flex justify-center items-center gap-1 border border-gold rounded-lg px-2 py-1 mt-2 font-light text-sm"
@@ -131,7 +109,6 @@ const InfoSection = ({ language }) => {
             {details.button_loc}
           </Link>
         </div>
->>>>>>> 6122174 (Made few changes, as the wedding date is getting closer :))
 
         <div className="static md:hidden h-px w-[50px] bg-black opacity-50" />
 
@@ -164,10 +141,6 @@ const InfoSection = ({ language }) => {
                 )
               )}
             </p>
-<<<<<<< HEAD
-          </div>
-          <div className="static md:hidden h-px w-[50px] bg-black opacity-50" />
-=======
             <p translate="no" className=" mt-3">
               {accommodations.checkout.map((item, index) =>
                 typeof item === "string" ? (
@@ -182,7 +155,6 @@ const InfoSection = ({ language }) => {
           </div>
           <div className="static md:hidden h-px w-[50px] bg-black opacity-50" />
 
->>>>>>> 6122174 (Made few changes, as the wedding date is getting closer :))
           {/* Right Detail */}
           <div className="w-full md:w-1/2 max-w-[700px] flex flex-col justify-start items-center text-center">
             <h5 translate="no" className="mb-4">
@@ -200,9 +172,6 @@ const InfoSection = ({ language }) => {
                 )
               )}
             </p>
-<<<<<<< HEAD
-            <p translate="no">
-=======
 
             <p translate="no" className="font-bold mb-1">
               {travel_transport.transport_details.arrival.title}
@@ -249,55 +218,6 @@ const InfoSection = ({ language }) => {
                   )
               )}
             </p>
-
-            {/* <p translate="no">
->>>>>>> 6122174 (Made few changes, as the wedding date is getting closer :))
-              {travel_transport.description_2.map((item, index) =>
-                typeof item === "string" ? (
-                  item
-                ) : (
-                  <span key={index} className="font-bold">
-                    {item.text}
-                  </span>
-                )
-              )}
-<<<<<<< HEAD
-            </p>
-            <p translate="no">
-=======
-            </p> */}
-            {/* <p translate="no">
->>>>>>> 6122174 (Made few changes, as the wedding date is getting closer :))
-              {travel_transport.description_3.map((item, index) =>
-                typeof item === "string" ? (
-                  item
-                ) : (
-                  <span key={index} className="font-bold">
-                    {item.text}
-                  </span>
-                )
-              )}
-<<<<<<< HEAD
-            </p>
-            <p translate="no">
-=======
-            </p> */}
-            {/* <p translate="no">
->>>>>>> 6122174 (Made few changes, as the wedding date is getting closer :))
-              {travel_transport.description_4.map((item, index) =>
-                typeof item === "string" ? (
-                  item
-                ) : (
-                  <span key={index} className="font-bold">
-                    {item.text}
-                  </span>
-                )
-              )}
-<<<<<<< HEAD
-            </p>
-=======
-            </p> */}
->>>>>>> 6122174 (Made few changes, as the wedding date is getting closer :))
           </div>
         </div>
         <div className="static md:hidden h-px w-[50px] bg-black opacity-50" />
