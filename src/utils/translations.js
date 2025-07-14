@@ -768,15 +768,9 @@ const translations = {
         ],
         transport_details: {
           arrival: {
-            title: "Friday 25th of July",
-            desc1: [
-              { bold: true, text: "Warsaw Airport (WAW):" },
-              "Bus leaves around 7:30PM - Karolina will be waiting at the arrivals.",
-            ],
-            desc2: [
-              { bold: true, text: "Katowice Airport:" },
-              "Bus leaves around 5:00PM - Emanuele will be waiting at the arrivals.",
-            ],
+            title: "",
+            desc1: [{ bold: true, text: "" }, ""],
+            desc2: [{ bold: true, text: "" }, ""],
           },
           departure: {
             title: "",
