@@ -100,7 +100,7 @@ const WelcomeSection = ({ language }) => {
               width={200}
               height={200}
               quality={100}
-              className="relative w-[180px] h-[180px] animate-spin-slow z-[3]"
+              className="relative w-[180px] md:w-[280px] h-[180px] md:h-[280px] animate-spin-slow z-[3]"
             />
             <div className="w-[55%] h-[55%] border-2 border-gold rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2]"></div>
           </div>
