@@ -1,135 +1,185 @@
-.openInviteBtn {
-  font-family: 'Alex Brush', 'Dancing Script', cursive, sans-serif;
-  font-size: 2.5rem;
-  font-weight: 400;
-  color: var(--color-primary, #d72660);
-  background: linear-gradient(90deg, #fff0f6 0%, #ffe3ec 100%);
-  border: 2px solid var(--color-primary, #d72660);
-  box-shadow: 0 4px 24px 0 rgba(215,38,96,0.10);
-  letter-spacing: 1px;
-  opacity: 0;
-  transform: translateY(40%);
-  animation: slideUpBtn 0.7s 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  transition: background 0.2s, color 0.2s, border 0.2s;
-  padding: 0.7em 2em;
-  min-width: 180px;
-  max-width: 90vw;
-  text-align: center;
-  top: 50% !important;
-  transform: translate(-50%, -50%) translateY(40%);
-  
-  @media (max-width: 680px) {
-    font-size: 1.4rem;
-    padding: 0.6em 1.2em;
-    min-width: 120px;
-    border-width: 1.5px;
-    top: 60% !important;
-  }
-}
-/* Hiệu ứng cho nút mở thiệp giống dòng chữ Xin Chào/Hello */
-.openInviteBtn {
-  font-family: 'Alex Brush', 'Dancing Script', cursive, sans-serif;
-  font-size: 2.5rem;
-  font-weight: 400;
-  color: var(--color-primary, #d72660);
-  background: linear-gradient(90deg, #fff0f6 0%, #ffe3ec 100%);
-  border: 2px solid var(--color-primary, #d72660);
-  box-shadow: 0 4px 24px 0 rgba(215,38,96,0.10);
-  letter-spacing: 1px;
-  opacity: 0;
-  transform: translateY(40%);
-  animation: slideUpBtn 0.7s 2.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  transition: background 0.2s, color 0.2s, border 0.2s;
-}
-.openInviteBtn:hover {
-  background: var(--color-primary, #d72660);
-  color: #fff;
-  border-color: var(--color-primary, #d72660);
-}
-
-@keyframes slideUpBtn {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateY(40%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) translateY(0);
-  }
-}
-/**
- * @file Homepage.module.scss
- * @description Styles for the homepage that are not handled by Tailwind CSS or the global.css are defined here.
- * @author Emanuele Sgroi
- * @date 19 October 2024
- */
-
 /*-------------- Splash screen---------------------- */
 
- .splashScreen {
+.splashScreen {
   position: fixed;
   width: 100%;
   height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-white);
+  background: linear-gradient(135deg, #fff5f8 0%, #ffe8ec 50%, #fff0f6 100%);
   overflow: hidden;
   z-index: 9999;
-  /* animation: fadeAway 2.5s ease-in-out forwards 4.5s; */
+}
 
-  .textContainer {
+/* Particles background */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(215, 38, 96, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes float {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  10% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-30px) scale(1.2);
+  }
+  90% {
+    opacity: 0.4;
+  }
+}
+
+/* Loading spinner */
+.loadingContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(215, 38, 96, 0.2);
+  border-top-color: var(--color-primary, #d72660);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Main content container */
+.content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+}
+
+/* Desktop text layout */
+.desktopText {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards 1s;
+}
+
+@media (max-width: 768px) {
+  .desktopText {
+    display: none;
+  }
+}
+
+/* Mobile text layout */
+.mobileText {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards 1s;
+}
+
+@media (max-width: 768px) {
+  .mobileText {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    opacity: 1;
-    transform: translateY(0);
+  }
+}
 
-    .word {
-      font-size: 80px;
-      opacity: 0;
-      animation: slideUp 0.5s ease forwards;
-      @media (max-width: 768px) {
-        font-size: 68px;
-      }
-      @media (max-width: 680px) {
-        display: none;
-      }
-    }
-  }
-  .textContainer:nth-of-type(1) {
-    .word {
-      animation-delay: 1s;
-    }
-  }
+/* Text container for desktop */
+.textContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  opacity: 1;
+  transform: translateY(0);
+}
 
-  .textContainer:nth-of-type(2) {
-    .word {
-      animation-delay: 1.6s;
-    }
-  }
+.word {
+  font-size: 80px;
+  opacity: 0;
+  animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  text-shadow: 0 2px 20px rgba(215, 38, 96, 0.15);
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #d72660 0%, #ff6b9d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
 
-  .textContainer:nth-of-type(3) {
-    .word {
-      animation-delay: 2.2s;
-    }
+.word:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 30px rgba(215, 38, 96, 0.3);
+}
+
+@media (max-width: 768px) {
+  .word {
+    font-size: 68px;
   }
+}
+
+.textContainer:nth-of-type(1) .word {
+  animation-delay: 1s;
+}
+
+.textContainer:nth-of-type(2) .word {
+  animation-delay: 1.6s;
 }
 
 /* Word animation - mobile */
 .word_mobile {
-  position: absolute;
+  position: relative;
   opacity: 0;
   font-size: 68px;
   animation: slideUp_mobile 1.2s ease-in-out forwards;
   text-align: center;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  @media (min-width: 681px) {
-    display: none;
-  }
+  text-shadow: 0 2px 20px rgba(215, 38, 96, 0.15);
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #d72660 0%, #ff6b9d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.word_mobile:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 30px rgba(215, 38, 96, 0.3);
 }
 
 .word_mobile:nth-of-type(1) {
@@ -140,44 +190,118 @@
   animation-delay: 2.2s;
 }
 
-.word_mobile:nth-of-type(3) {
-  animation-delay: 3.4s;
+/* Open Invitation Button */
+.openInviteBtn {
+  font-family: 'Alex Brush', 'Dancing Script', cursive, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--color-primary, #d72660);
+  background: linear-gradient(135deg, #fff0f6 0%, #ffe3ec 50%, #fff0f6 100%);
+  border: 2px solid var(--color-primary, #d72660);
+  box-shadow: 0 8px 32px rgba(215, 38, 96, 0.15);
+  letter-spacing: 1px;
+  padding: 0.8em 2.5em;
+  min-width: 220px;
+  max-width: 90vw;
+  text-align: center;
+  border-radius: 50px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(40%);
+  animation: slideUpBtn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Slide up animation */
-@keyframes slideUp {
+.openInviteBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s ease;
+}
+
+.openInviteBtn:hover::before {
+  left: 100%;
+}
+
+.openInviteBtn:hover {
+  background: var(--color-primary, #d72660);
+  color: #fff;
+  border-color: var(--color-primary, #d72660);
+  box-shadow: 0 12px 48px rgba(215, 38, 96, 0.3);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.openInviteBtn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (max-width: 680px) {
+  .openInviteBtn {
+    font-size: 1.6rem;
+    padding: 0.7em 1.8em;
+    min-width: 180px;
+    border-width: 1.5px;
+    animation-delay: 2.5s;
+  }
+}
+
+@keyframes slideUpBtn {
   0% {
     opacity: 0;
     transform: translateY(40%);
   }
-
   100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Slide up animation - mobile */
-@keyframes slideUp_mobile {
+/* Animations */
+@keyframes slideUp {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(40%);
-  }
-  25% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  75% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(40%);
   }
   100% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-40%);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Fade away for splash screen */
+@keyframes slideUp_mobile {
+  0% {
+    opacity: 0;
+    transform: translateY(40%);
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40%);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes fadeAway {
   0% {
     opacity: 1;

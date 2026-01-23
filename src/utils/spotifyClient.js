@@ -42,6 +42,9 @@ async function fetchClientAccessToken() {
       "Error fetching client access token:",
       error.response?.data || error.message
     );
+    // Reset token on error
+    clientAccessToken = null;
+    clientTokenExpiry = null;
     return null;
   }
 }

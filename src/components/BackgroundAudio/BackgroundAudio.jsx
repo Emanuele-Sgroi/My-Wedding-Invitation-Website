@@ -7,18 +7,39 @@ const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/musi
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
 
+  // Log when component mounts
+  useEffect(() => {
+    console.log("[BackgroundAudio] Component mounted");
+    console.log("[BackgroundAudio] ref:", ref);
+    console.log("[BackgroundAudio] audioRef:", audioRef);
+  }, []);
+
   // Hàm setMuted: chỉ thao tác trực tiếp trên audio element
   const setMuted = (val) => {
     if (audioRef.current) {
       audioRef.current.muted = val;
-      console.log("[BackgroundAudio] setMuted: DOM muted=", audioRef.current.muted, "val=", val);
     }
   };
 
-  useImperativeHandle(ref, () => ({
-    audioRef,
-    setMuted,
-  }), []);
+  // Gán ref ngay lập tức khi audioRef thay đổi
+  useEffect(() => {
+    if (ref && audioRef.current) {
+      console.log("[BackgroundAudio] Gán ref ngay lập tức");
+      ref.current = {
+        audioRef,
+        setMuted,
+      };
+    }
+  }, [audioRef.current, ref]);
+
+  useImperativeHandle(ref, () => {
+    console.log("[BackgroundAudio] useImperativeHandle called");
+    console.log("[BackgroundAudio] Returning:", { audioRef, setMuted });
+    return {
+      audioRef,
+      setMuted,
+    };
+  }, []);
 
   // Không tự động play, chỉ play khi gọi từ ngoài
   useEffect(() => {
@@ -30,20 +51,16 @@ const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/musi
   const toggle = async () => {
     const a = audioRef.current;
     if (!a) {
-      console.warn("[BackgroundAudio] toggle: audioRef not ready");
       return;
     }
     if (playing) {
       a.pause();
       setPlaying(false);
-      console.log("[BackgroundAudio] Paused audio");
     } else {
       try {
         a.muted = false;
-        console.log("[BackgroundAudio] toggle: set DOM muted=false trước play, DOM muted:", a.muted);
         await a.play();
         setPlaying(true);
-        console.log("[BackgroundAudio] Play audio success, DOM muted:", a.muted);
       } catch (err) {
         setPlaying(false);
         console.error("[BackgroundAudio] Play audio error", err);
@@ -53,7 +70,7 @@ const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/musi
 
   useEffect(() => {
     if (audioRef.current) {
-      console.log("[BackgroundAudio] mounted, muted:", audioRef.current.muted, "src:", src);
+      audioRef.current.muted = true;
     }
   }, [src]);
 
@@ -64,9 +81,8 @@ const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/musi
         src={src}
         loop={loop}
         preload="auto"
-        onPlay={() => console.log("[BackgroundAudio] onPlay event")}
-        onPause={() => console.log("[BackgroundAudio] onPause event")}
-        onVolumeChange={() => console.log("[BackgroundAudio] onVolumeChange", audioRef.current?.volume, "muted:", audioRef.current?.muted)}
+        onLoadedData={() => console.log("[BackgroundAudio] Audio loaded")}
+        onError={(e) => console.error("[BackgroundAudio] Audio error:", e)}
       />
       {showButton && (
         <button

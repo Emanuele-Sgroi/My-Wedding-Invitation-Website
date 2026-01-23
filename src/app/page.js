@@ -20,12 +20,10 @@ import {
   AttendingGuestsSection,
   BackgroundAudio,
 } from "@/components";
-import { useState as useReactState } from "react";
-import LanguageDetector from "@/components/LanguageDetector/LanguageDetector";
 
 export default function Home() {
   const [language, setLanguage] = useState("vi"); // Set default Language to Vietnamese
-  const [splashDone, setSplashDone] = useReactState(false);
+  const [splashDone, setSplashDone] = useState(false);
   const audioRef = useRef(null);
 
   // Scroll to top on page load
@@ -52,7 +50,6 @@ export default function Home() {
       {/* Only render main content after splash is done */}
       {splashDone && (
         <>
-          <LanguageDetector />
           <Navbar
             language={language}
             detectedLanguage={language}

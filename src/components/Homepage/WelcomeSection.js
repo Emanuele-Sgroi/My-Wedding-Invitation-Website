@@ -249,8 +249,8 @@ const WelcomeSection = ({ language }) => {
             }}
             className="h-full w-full"
           >
-            <SwiperSlide className="h-full w-full">
-              <div className="parallax-bg" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
+            <SwiperSlide className="h-full w-full relative">
+              <div className="parallax-bg relative w-full h-full" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
                 <Image
                   src={images.welcome_1}
                   alt={`welcome_1`}
@@ -260,8 +260,8 @@ const WelcomeSection = ({ language }) => {
                 />
               </div>
             </SwiperSlide>
-            <SwiperSlide className="h-full w-full">
-              <div className="parallax-bg" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
+            <SwiperSlide className="h-full w-full relative">
+              <div className="parallax-bg relative w-full h-full" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
                 <Image
                   src={images.welcome_2}
                   alt={`welcome_2`}
@@ -271,8 +271,8 @@ const WelcomeSection = ({ language }) => {
                 />
               </div>
             </SwiperSlide>
-            <SwiperSlide className="h-full w-full">
-              <div className="parallax-bg" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
+            <SwiperSlide className="h-full w-full relative">
+              <div className="parallax-bg relative w-full h-full" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
                 <Image
                   src={images.welcome_3}
                   alt={`welcome_3`}

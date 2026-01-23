@@ -5,8 +5,7 @@
  * @date 19 October 2024
  */
 
-const translations = 
-{ };
+const translations = {};
 
 // English translations
 translations.en = {

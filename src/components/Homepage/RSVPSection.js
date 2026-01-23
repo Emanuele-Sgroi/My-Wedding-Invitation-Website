@@ -96,10 +96,10 @@ const RSVPSection = ({ language }) => {
         // Fetch the documents
         const querySnapshot = await getDocs(guestsCollectionRef);
 
-        const guestsArray = [];
-        querySnapshot.forEach((doc) => {
-          guestsArray.push({ id: doc.id, ...doc.data() });
-        });
+        const guestsArray = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
         setGuestsList(guestsArray);
       } catch (error) {

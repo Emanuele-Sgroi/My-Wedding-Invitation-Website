@@ -19,7 +19,5 @@ export { default as MusicSection } from "./Homepage/MusicSection";
 export { default as AttendingGuestsSection } from "./Homepage/AttendingGuestsSection";
 export { default as Navbar } from "./Homepage/Navbar";
 export { default as Footer } from "./Homepage/Footer";
-export const BackgroundAudio = dynamic(
-  () => import("./BackgroundAudio/BackgroundAudio.jsx"),
-  { ssr: false }
-);
+// Export BackgroundAudio directly instead of dynamic import to fix ref issue
+export { default as BackgroundAudio } from "./BackgroundAudio/BackgroundAudio.jsx";

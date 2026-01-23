@@ -68,11 +68,12 @@ const MusicSection = ({ language }) => {
         `/api/search-music?query=${encodeURIComponent(searchQuery)}`
       );
       const data = await response.json();
-      setResults(data.tracks.items);
+      setResults(data.tracks.items || []);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching tracks:", error);
       setIsLoading(false);
+      setResults([]);
     }
   };
 
@@ -117,6 +118,12 @@ const MusicSection = ({ language }) => {
       }
       setProgress(0);
     } else {
+      // Stop any currently playing song before playing a new one
+      if (audioRef.current && currentlyPlaying) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+      
       // Play the selected song
       setCurrentlyPlaying(trackId);
       setMusicSpin(true);
@@ -125,6 +132,10 @@ const MusicSection = ({ language }) => {
         audioRef.current.src = previewUrl;
         audioRef.current.play().catch((error) => {
           console.error("Audio play error:", error);
+          setCurrentlyPlaying(null);
+          setMusicSpin(false);
+          setIsPlaying(false);
+          setProgress(0);
         });
       }
     }
@@ -196,6 +207,9 @@ const MusicSection = ({ language }) => {
     if (videoElement) {
       // (130% speed)
       videoElement.playbackRate = 1.3;
+      
+      // Ensure video is muted for autoplay
+      videoElement.muted = true;
     }
   }, []);
 
