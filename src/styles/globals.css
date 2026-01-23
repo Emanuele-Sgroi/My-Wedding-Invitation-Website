@@ -331,3 +331,61 @@ li {
 .isolate {
   isolation: isolate;
 }
+
+/* Enhanced Visual Effects for Welcome Section */
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Swiper Pagination Custom Styles */
+.swiper-pagination-bullet {
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  transform: scale(1.25);
+}
+
+/* Enhanced Countdown Animations */
+@keyframes countPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.countdown-number {
+  animation: countPulse 1s ease-in-out infinite;
+}
+
+/* Image Fade-in Animation */
+@keyframes fadeInScale {
+  0% { 
+    opacity: 0; 
+    transform: scale(1.05); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+.fade-in-scale {
+  animation: fadeInScale 1s ease-out forwards;
+}
+
+/* Enhanced Hover Effects */
+.welcome-hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.welcome-hover-lift:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Smooth Parallax Transition */
+.swiper-slide-active .parallax-bg img {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -15,23 +15,40 @@ import { getCountdown } from "@/utils/countdownHelper";
 import { Link as ScrollLink } from "react-scroll";
 import Tilt from "react-parallax-tilt";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Parallax, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
+import 'swiper/css/pagination';
+import 'swiper/css/parallax';
 
 const WelcomeSection = ({ language }) => {
-  const [countdown, setCountdown] = useState(null); // Set initial state as null
-  const [isClient, setIsClient] = useState(false); // Track if we're on the client side, for the countdown delay
+  const [countdown, setCountdown] = useState(null);
+  const [isClient, setIsClient] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    setIsClient(true); // This will only be true on the client
-    setCountdown(getCountdown()); // Set the initial countdown state
+    setIsClient(true);
+    setCountdown(getCountdown());
 
     const intervalId = setInterval(() => {
       setCountdown(getCountdown());
-    }, 1000); // Update the countdown every second
+    }, 1000);
 
-    return () => clearInterval(intervalId); // Cleanup on unmount
+    // Preload images for smooth transitions
+    const preloadImages = () => {
+      const imageArray = [images.welcome_1, images.welcome_2, images.welcome_3];
+      imageArray.forEach((src, index) => {
+        const img = document.createElement('img');
+        img.src = src.src; // Access the src property of Next.js Image import
+        img.onload = () => {
+          if (index === 0) setImageLoaded(true);
+        };
+      });
+    };
+
+    preloadImages();
+
+    return () => clearInterval(intervalId);
   }, []);
 
   // Destructure translation strings
@@ -116,36 +133,36 @@ const WelcomeSection = ({ language }) => {
               width={200}
               height={200}
               quality={100}
-              className="relative w-[180px] md:w-[280px] h-[180px] md:h-[280px] animate-spin-slow z-[3]"
+              className="relative w-[180px] md:w-[280px] h-[180px] md:h-[280px] animate-spin-slow z-[3] transition-transform duration-500 hover:scale-110"
             />
-            <div className="w-[55%] h-[55%] border-2 border-gold rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2]"></div>
+            <div className="w-[55%] h-[55%] border-2 border-gold rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2] animate-pulse"></div>
           </div>
         ) : (
           <div className="flex justify-center gap-4 md:gap-8 mt-4 text-[#fffdfc]">
-            <div className="flex flex-col justify-center items-center">
-              <h6 translate="no">{countdown.days}</h6>
+            <div className="flex flex-col justify-center items-center transform transition-all duration-300 hover:scale-110">
+              <h6 translate="no" className="transform transition-all duration-300">{countdown.days}</h6>
               <p translate="no" className="text-sm">
                 {countdown.days === 1 ? day.toUpperCase() : days.toUpperCase()}
               </p>
             </div>
-            <div className="flex flex-col justify-center items-center">
-              <h6 translate="no">{countdown.hours}</h6>
+            <div className="flex flex-col justify-center items-center transform transition-all duration-300 hover:scale-110">
+              <h6 translate="no" className="transform transition-all duration-300">{countdown.hours}</h6>
               <p translate="no" className="text-sm">
                 {countdown.hours === 1
                   ? hour.toUpperCase()
                   : hours.toUpperCase()}
               </p>
             </div>
-            <div className="flex flex-col justify-center items-center">
-              <h6 translate="no">{countdown.minutes}</h6>
+            <div className="flex flex-col justify-center items-center transform transition-all duration-300 hover:scale-110">
+              <h6 translate="no" className="transform transition-all duration-300">{countdown.minutes}</h6>
               <p translate="no" className="text-sm">
                 {countdown.minutes === 1
                   ? minute.toUpperCase()
                   : minutes.toUpperCase()}
               </p>
             </div>
-            <div className="flex flex-col justify-center items-center">
-              <h6 translate="no">{countdown.seconds}</h6>
+            <div className="flex flex-col justify-center items-center transform transition-all duration-300 hover:scale-110">
+              <h6 translate="no" className="transform transition-all duration-300">{countdown.seconds}</h6>
               <p translate="no" className="text-sm">
                 {countdown.seconds === 1
                   ? second.toUpperCase()
@@ -212,45 +229,58 @@ const WelcomeSection = ({ language }) => {
           </div>
         </div>
 
-        {/* Mobile: Swiper Carousel */}
+        {/* Mobile: Swiper Carousel with Parallax */}
         <div className="md:hidden h-full w-full">
           <Swiper
-            modules={[Autoplay]}
+            modules={[Autoplay, Parallax, Pagination]}
             spaceBetween={0}
             slidesPerView={1}
             autoplay={{
-              delay: 3000,
+              delay: 4000,
               disableOnInteraction: false,
             }}
             loop={true}
+            parallax={true}
+            speed={800}
+            pagination={{
+              clickable: true,
+              bulletClass: 'swiper-pagination-bullet !bg-white/70 !w-2 !h-2',
+              bulletActiveClass: 'swiper-pagination-bullet-active !bg-gold !scale-125'
+            }}
             className="h-full w-full"
           >
             <SwiperSlide className="h-full w-full">
-              <Image
-                src={images.welcome_1}
-                alt={`welcome_1`}
-                fill
-                quality={100}
-                className="object-cover object-center z-0"
-              />
+              <div className="parallax-bg" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
+                <Image
+                  src={images.welcome_1}
+                  alt={`welcome_1`}
+                  fill
+                  quality={100}
+                  className={`object-cover object-center z-0 transition-all duration-1000 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
+                />
+              </div>
             </SwiperSlide>
             <SwiperSlide className="h-full w-full">
-              <Image
-                src={images.welcome_2}
-                alt={`welcome_2`}
-                fill
-                quality={100}
-                className="object-cover object-center z-0"
-              />
+              <div className="parallax-bg" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
+                <Image
+                  src={images.welcome_2}
+                  alt={`welcome_2`}
+                  fill
+                  quality={100}
+                  className={`object-cover object-center z-0 transition-all duration-1000 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
+                />
+              </div>
             </SwiperSlide>
             <SwiperSlide className="h-full w-full">
-              <Image
-                src={images.welcome_3}
-                alt={`welcome_3`}
-                fill
-                quality={100}
-                className="object-cover object-center z-0"
-              />
+              <div className="parallax-bg" data-swiper-parallax="-20%" data-swiper-parallax-duration="1000">
+                <Image
+                  src={images.welcome_3}
+                  alt={`welcome_3`}
+                  fill
+                  quality={100}
+                  className={`object-cover object-center z-0 transition-all duration-1000 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
+                />
+              </div>
             </SwiperSlide>
           </Swiper>
         </div>

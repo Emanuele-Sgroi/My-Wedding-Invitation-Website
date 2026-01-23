@@ -19,8 +19,8 @@ const SplashScreen = ({ onDone, audioRef }) => {
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    // Show button after splash animation (e.g., 3.5s)
-    const btnTimer = setTimeout(() => setShowButton(true), 3500);
+    // Show button after splash animation (e.g., 2.5s for mobile)
+    const btnTimer = setTimeout(() => setShowButton(true), 2500);
     return () => {
       clearTimeout(btnTimer);
       document.body.style.overflow = "auto";
@@ -58,7 +58,7 @@ const SplashScreen = ({ onDone, audioRef }) => {
   return (
     <>
       <div className={styles.splashScreen}>
-        {/* Vietnamese and English */}
+        {/* Vietnamese and English - Desktop (Original 3-column layout) */}
         {["Xin Chào", "Hello"].map((text, index) => (
           <div key={index} className={styles.textContainer}>
             <p translate="no" className={`${styles.word} alex-brush`}>
@@ -66,22 +66,25 @@ const SplashScreen = ({ onDone, audioRef }) => {
             </p>
           </div>
         ))}
-        {/* Vietnamese  and English */}
-        {["Xin Chào", "Hello"].map((text, index) => (
-          <p
-            key={index}
-            translate="no"
-            className={`${styles.word_mobile} alex-brush`}
-          >
-            {text}
-          </p>
-        ))}
+        
+        {/* Vietnamese and English - Mobile */}
+        <div className="md:hidden flex flex-col items-center justify-center gap-4">
+          {["Xin Chào", "Hello"].map((text, index) => (
+            <p
+              key={index}
+              translate="no"
+              className={`${styles.word_mobile} alex-brush`}
+            >
+              {text}
+            </p>
+          ))}
+        </div>
+        
+        {/* Open Button - Centered for both desktop and mobile */}
         {showButton && (
           <button
             onClick={handleOpenInvite}
-            className={
-              `${styles.openInviteBtn} absolute bottom-12 left-1/2 -translate-x-1/2 px-8 py-3 rounded-full z-50`
-            }
+            className={`${styles.openInviteBtn} absolute left-1/2 px-8 py-3 rounded-full z-50`}
             style={{ minWidth: 180 }}
           >
             <span className="alex-brush">Mở Thiệp / Open Invitation</span>

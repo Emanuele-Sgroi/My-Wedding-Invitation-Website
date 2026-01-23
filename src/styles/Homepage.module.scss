@@ -9,20 +9,21 @@
   letter-spacing: 1px;
   opacity: 0;
   transform: translateY(40%);
-  animation: slideUpBtn 0.7s 2.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation: slideUpBtn 0.7s 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   transition: background 0.2s, color 0.2s, border 0.2s;
   padding: 0.7em 2em;
   min-width: 180px;
   max-width: 90vw;
   text-align: center;
+  top: 50% !important;
+  transform: translate(-50%, -50%) translateY(40%);
+  
   @media (max-width: 680px) {
     font-size: 1.4rem;
     padding: 0.6em 1.2em;
     min-width: 120px;
-    bottom: 2.5rem !important;
-    left: 50% !important;
-    transform: translate(-50%, 40%);
     border-width: 1.5px;
+    top: 60% !important;
   }
 }
 /* Hiệu ứng cho nút mở thiệp giống dòng chữ Xin Chào/Hello */
@@ -49,11 +50,11 @@
 @keyframes slideUpBtn {
   0% {
     opacity: 0;
-    transform: translateY(40%);
+    transform: translate(-50%, -50%) translateY(40%);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%) translateY(0);
   }
 }
 /**
@@ -122,6 +123,10 @@
   opacity: 0;
   font-size: 68px;
   animation: slideUp_mobile 1.2s ease-in-out forwards;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
   @media (min-width: 681px) {
     display: none;
   }
@@ -156,19 +161,19 @@
 @keyframes slideUp_mobile {
   0% {
     opacity: 0;
-    transform: translateY(40%);
+    transform: translateX(-50%) translateY(40%);
   }
   25% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
   75% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
   100% {
     opacity: 0;
-    transform: translateY(-40%);
+    transform: translateX(-50%) translateY(-40%);
   }
 }
 
