@@ -7,7 +7,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   SplashScreen,
   Navbar,
@@ -18,11 +18,15 @@ import {
   RSVPSection,
   RegistrySection,
   MusicSection,
+  BackgroundAudio,
 } from "@/components";
+import { useState as useReactState } from "react";
 import LanguageDetector from "@/components/LanguageDetector/LanguageDetector";
 
 export default function Home() {
-  const [language, setLanguage] = useState("en"); // Set default Language
+  const [language, setLanguage] = useState("vi"); // Set default Language to Vietnamese
+  const [splashDone, setSplashDone] = useReactState(false);
+  const audioRef = useRef(null);
 
   // Scroll to top on page load
   useEffect(() => {
@@ -32,53 +36,39 @@ export default function Home() {
   // Detect the browser's language and set it if supported, else default to English
   useEffect(() => {
     const browserLanguage = navigator.language || navigator.userLanguage;
-    const supportedLanguages = ["en", "it", "pl"]; // English, Italian and Polish are the current languages available for this website
-    const detectedLanguage = supportedLanguages.includes(
-      browserLanguage.slice(0, 2)
-    )
+    const supportedLanguages = ["vi", "en"];
+    const detectedLanguage = supportedLanguages.includes(browserLanguage.slice(0, 2))
       ? browserLanguage.slice(0, 2)
-      : "en";
-
+      : "vi";
     setLanguage(detectedLanguage);
   }, []);
 
   return (
     <main className={`relative w-full h-full`}>
       {/* Splash Screen */}
-      <SplashScreen />
-
-      {/* Detect Language */}
-      <LanguageDetector />
-
-      {/* Navbar */}
-      <Navbar
-        language={language}
-        detectedLanguage={language}
-        setLanguage={setLanguage}
-      />
-
-      {/* Welcome Section */}
-      <WelcomeSection language={language} />
-
-      <div className="relative z-10">
-        {/* Save the Date Section */}
-        <SaveTheDate language={language} />
-
-        {/* Wedding Agenda / Schedule Section */}
-        <ScheduleSection language={language} />
-
-        {/* Information Section */}
-        <InfoSection language={language} />
-
-        {/* RSVP Section */}
-        <RSVPSection language={language} />
-
-        {/* Gift Registry Section */}
-        <RegistrySection language={language} />
-
-        {/* Song Requests Section */}
-        <MusicSection language={language} />
-      </div>
+      {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} audioRef={audioRef} />}
+      {/* BackgroundAudio luôn tồn tại, chỉ hiện nút play/pause khi đã vào thiệp */}
+      <BackgroundAudio ref={audioRef} showButton={splashDone} />
+      {/* Only render main content after splash is done */}
+      {splashDone && (
+        <>
+          <LanguageDetector />
+          <Navbar
+            language={language}
+            detectedLanguage={language}
+            setLanguage={setLanguage}
+          />
+          <WelcomeSection language={language} />
+          <div className="relative z-10">
+            <SaveTheDate language={language} />
+            <ScheduleSection language={language} />
+            <InfoSection language={language} />
+            <RSVPSection language={language} />
+            <RegistrySection language={language} />
+            <MusicSection language={language} />
+          </div>
+        </>
+      )}
     </main>
   );
 }

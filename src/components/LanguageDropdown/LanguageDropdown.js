@@ -1,6 +1,6 @@
 /**
  * @file LanguageDropdown.js
- * @description A component that displays a language selection dropdown, allowing users to switch between supported languages (English, Italian, Polish).
+ * @description A component that displays a language selection dropdown, allowing users to switch between supported languages (Vietnamese, English).
  *              This component handles its own dropdown menu and selection behavior without using Shadcn.
  * @author Emanuele Sgroi
  * @date 19 October 2024
@@ -28,10 +28,9 @@ const LanguageDropdown = ({ detectedLanguage, setLanguage }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Group drop down elements for convenience
+  // Group drop down elements for convenience (only Vietnamese and English)
   const languages = [
-    { code: "it", label: "Italiano", flag: images.italian },
-    { code: "pl", label: "Polski", flag: images.polish },
+    { code: "vi", label: "Tiếng Việt", flag: images.vietnam },
     { code: "en", label: "English", flag: images.english },
   ];
 

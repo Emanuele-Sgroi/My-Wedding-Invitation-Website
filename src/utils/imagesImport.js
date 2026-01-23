@@ -8,11 +8,8 @@
 import welcome_1 from "../../public/images/welcome_1.jpg";
 import welcome_2 from "../../public/images/welcome_2.jpg";
 import welcome_3 from "../../public/images/welcome_3.jpg";
-import curved_it from "../../public/images/curved_it.png";
 import curved_en from "../../public/images/curved_en.png";
-import curved_pl from "../../public/images/curved_pl.png";
-import polish from "../../public/icons/polish.png";
-import italian from "../../public/icons/italian.png";
+import vietnam from "../../public/icons/vietnam.svg";
 import english from "../../public/icons/english.png";
 import dove from "../../public/icons/dove.png";
 import g_1_1 from "../../public/images/g_1_1.jpg";
@@ -50,12 +47,9 @@ const images = {
   welcome_1,
   welcome_2,
   welcome_3,
-  curved_it,
   curved_en,
-  curved_pl,
-  polish,
-  italian,
   english,
+  vietnam,
   dove,
   g_1_1,
   g_1_2,

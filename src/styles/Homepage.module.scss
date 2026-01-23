@@ -1,3 +1,61 @@
+.openInviteBtn {
+  font-family: 'Alex Brush', 'Dancing Script', cursive, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--color-primary, #d72660);
+  background: linear-gradient(90deg, #fff0f6 0%, #ffe3ec 100%);
+  border: 2px solid var(--color-primary, #d72660);
+  box-shadow: 0 4px 24px 0 rgba(215,38,96,0.10);
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(40%);
+  animation: slideUpBtn 0.7s 2.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  padding: 0.7em 2em;
+  min-width: 180px;
+  max-width: 90vw;
+  text-align: center;
+  @media (max-width: 680px) {
+    font-size: 1.4rem;
+    padding: 0.6em 1.2em;
+    min-width: 120px;
+    bottom: 2.5rem !important;
+    left: 50% !important;
+    transform: translate(-50%, 40%);
+    border-width: 1.5px;
+  }
+}
+/* Hiệu ứng cho nút mở thiệp giống dòng chữ Xin Chào/Hello */
+.openInviteBtn {
+  font-family: 'Alex Brush', 'Dancing Script', cursive, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--color-primary, #d72660);
+  background: linear-gradient(90deg, #fff0f6 0%, #ffe3ec 100%);
+  border: 2px solid var(--color-primary, #d72660);
+  box-shadow: 0 4px 24px 0 rgba(215,38,96,0.10);
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(40%);
+  animation: slideUpBtn 0.7s 2.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.openInviteBtn:hover {
+  background: var(--color-primary, #d72660);
+  color: #fff;
+  border-color: var(--color-primary, #d72660);
+}
+
+@keyframes slideUpBtn {
+  0% {
+    opacity: 0;
+    transform: translateY(40%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /**
  * @file Homepage.module.scss
  * @description Styles for the homepage that are not handled by Tailwind CSS or the global.css are defined here.
@@ -7,7 +65,7 @@
 
 /*-------------- Splash screen---------------------- */
 
-.splashScreen {
+ .splashScreen {
   position: fixed;
   width: 100%;
   height: 100svh;
@@ -17,7 +75,7 @@
   background-color: var(--color-white);
   overflow: hidden;
   z-index: 9999;
-  animation: fadeAway 2.5s ease-in-out forwards 4.5s;
+  /* animation: fadeAway 2.5s ease-in-out forwards 4.5s; */
 
   .textContainer {
     display: flex;

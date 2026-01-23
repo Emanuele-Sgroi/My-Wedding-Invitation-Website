@@ -13,17 +13,17 @@ import LanguageDetector from "@/components/LanguageDetector/LanguageDetector";
 import translations from "@/utils/translations";
 
 export default function NotFoundComponent() {
-  const [language, setLanguage] = useState("en"); // Default language
+  const [language, setLanguage] = useState("vi"); // Default language (Vietnamese)
 
   // Detect language
   useEffect(() => {
     const browserLanguage = navigator.language || navigator.userLanguage;
-    const supportedLanguages = ["en", "it", "pl"];
+    const supportedLanguages = ["vi", "en"];
     const detectedLanguage = supportedLanguages.includes(
       browserLanguage.slice(0, 2)
     )
       ? browserLanguage.slice(0, 2)
-      : "en";
+      : "vi";
 
     setLanguage(detectedLanguage);
   }, []);

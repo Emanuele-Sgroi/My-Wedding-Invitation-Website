@@ -1,7 +1,7 @@
 /**
  * @file LanguageDetector.js
- * @description A component that detects the user's browser language and sets it to one of the supported languages (English, Italian, Polish).
- *              Defaults to English if the detected language is not supported.
+ * @description Detects the user's browser language and limits it to supported languages (Vietnamese, English).
+ *              Defaults to Vietnamese if the detected language is not supported.
  * @author Emanuele Sgroi
  * @date 19 October 2024
  */
@@ -11,19 +11,17 @@
 import { useState, useEffect } from "react";
 
 const LanguageDetector = () => {
-  const [language, setLanguage] = useState("en"); // Default language is English
+  const [language, setLanguage] = useState("vi"); // Default language is Vietnamese
 
   useEffect(() => {
     // Detect browser language
     const browserLanguage = navigator.language || navigator.userLanguage;
 
-    // We're only supporting a few languages, so let's normalize it
-    const supportedLanguages = ["en", "it", "pl"];
-    const detectedLanguage = supportedLanguages.includes(
-      browserLanguage.slice(0, 2)
-    )
+    // Only support Vietnamese and English
+    const supportedLanguages = ["vi", "en"];
+    const detectedLanguage = supportedLanguages.includes(browserLanguage.slice(0, 2))
       ? browserLanguage.slice(0, 2)
-      : "en"; // Default to English if unsupported
+      : "vi"; // Default to Vietnamese if unsupported
 
     setLanguage(detectedLanguage);
   }, []);

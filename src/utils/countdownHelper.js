@@ -6,7 +6,8 @@
  */
 
 export const getCountdown = () => {
-  const weddingDate = new Date("2025-07-26T16:00:00"); // 26 July 2025, 4:00 PM
+  // Target wedding datetime (local): 2026-02-06 09:00
+  const weddingDate = new Date(2026, 1, 6, 9, 0, 0); // month is 0-indexed -> 1 = February
   //const weddingDate = new Date("2025-07-15T20:53:00"); // Test
 
   const now = new Date(); // Get the current date and time

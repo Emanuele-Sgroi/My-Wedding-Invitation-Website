@@ -87,15 +87,7 @@ const WelcomeSection = ({ language }) => {
         {countdown.message ? (
           <div className="absolute bottom-16">
             <Image
-              src={
-                language === "en"
-                  ? images.curved_en
-                  : language === "it"
-                  ? images.curved_it
-                  : language === "pl"
-                  ? images.curved_pl
-                  : images.curved_en
-              }
+              src={images.curved_en}
               alt="we did it"
               width={200}
               height={200}

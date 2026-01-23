@@ -9,26 +9,30 @@ import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import LanguageDetector from "@/components/LanguageDetector/LanguageDetector";
 import { Toaster } from "@/components/ui/toaster";
+import dynamic from "next/dynamic";
+
+// Dynamically import BackgroundAudio as client-only
+const BackgroundAudio = dynamic(() => import("@/components/BackgroundAudio/BackgroundAudio"), { ssr: false });
 
 const inter = Inter({ subsets: ["latin"] });
 
 // Metadata configuration (nice for social sharing)
 export const metadata = {
-  title: "Karolina & Emanuele",
+  title: "Linh Nhi & Như Quỳnh Wedding",
   description:
-    "You are invited to our Wedding | Sei invitato al nostro Matrimonio |  Jesteś zaproszony na nasz Ślub",
+    "You are invited to our Wedding | Bạn được mời đến dự đám cưới của chúng tôi. |  Jesteś zaproszony na nasz Ślub",
   openGraph: {
-    title: "Karolina & Emanuele",
+    title: "Linh Nhi & Như Quỳnh Wedding",
     description:
-      "You are invited to our Wedding | Sei invitato al nostro Matrimonio |  Jesteś zaproszony na nasz Ślub",
+      "You are invited to our Wedding | Bạn được mời đến dự đám cưới của chúng tôi. |  Jesteś zaproszony na nasz Ślub",
     url: "https://emanuelekarolina.vercel.app/",
-    siteName: "Karolina & Emanuele",
+    siteName: "Linh Nhi & Như Quỳnh Wedding",
     images: [
       {
         url: "https://emanuelekarolina.vercel.app/images/og-image.jpg",
         width: 1200,
         height: 600,
-        alt: "Karolina & Emanuele Wedding Website",
+        alt: "Linh Nhi & Như Quỳnh Wedding Website",
       },
     ],
     type: "website",
@@ -37,10 +41,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" translate="no">
+    <html lang="vi" translate="no">
       <body className={inter.className}>
         {/* Component to auto-detect and manage language */}
         <LanguageDetector />
+        <BackgroundAudio />
         {children}
         <Toaster />
       </body>
