@@ -29,7 +29,7 @@ const ScheduleSection = ({ language }) => {
   const { title, description, day_1, day_2 } =
     translations[language].schedule_section;
 
-  // Group timeline data for convenience
+  // Group timeline data for convenience - Vietnamese wedding schedule
   const timelineData = [
     {
       day: day_1.title,
@@ -44,20 +44,15 @@ const ScheduleSection = ({ language }) => {
           title: day_1.events.dinner.title,
           icon: "/icons/dinner.svg",
         },
-        // {
-        //   time: day_1.events.dance.time,
-        //   title: day_1.events.dance.title,
-        //   icon: "/icons/dance.svg",
-        // },
+        {
+          time: day_1.events.dance.time,
+          title: day_1.events.dance.title,
+          icon: "/icons/dance.svg",
+        },
         {
           time: day_1.events.photo.time,
           title: day_1.events.photo.title,
           icon: "/icons/photobooth.svg",
-        },
-        {
-          time: day_1.events.cake_cutting.time,
-          title: day_1.events.cake_cutting.title,
-          icon: "/icons/cake.svg",
         },
         {
           time: day_1.events.pig.time,
@@ -74,7 +69,7 @@ const ScheduleSection = ({ language }) => {
           title: day_1.events.party.title,
           icon: "/icons/repeat1.svg",
         },
-      ],
+      ].filter((event) => event.time && event.title), // Only show events with time and title
     },
     {
       day: day_2.title,
@@ -82,24 +77,24 @@ const ScheduleSection = ({ language }) => {
         {
           time: day_2.events.after.time,
           title: day_2.events.after.title,
-          icon: "/icons/after.svg",
+          icon: "/icons/ceremony.svg",
         },
         {
           time: day_2.events.vespa.time,
           title: day_2.events.vespa.title,
-          icon: "/icons/vespa.svg",
+          icon: "/icons/cake.svg",
         },
         {
           time: day_2.events.party_continues.time,
           title: day_2.events.party_continues.title,
-          icon: "/icons/repeat2.svg",
+          icon: "/icons/ceremony.svg",
         },
         {
           time: day_2.events.end.time,
           title: day_2.events.end.title,
           icon: "/icons/end.svg",
         },
-      ],
+      ].filter((event) => event.time && event.title), // Only show events with time and title
     },
   ];
 

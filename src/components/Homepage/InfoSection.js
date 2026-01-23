@@ -27,8 +27,7 @@ const InfoSection = ({ language }) => {
   //Extract couple contacts from env
   const coupleEmail = process.env.NEXT_PUBLIC_EMAIL;
   const herNumber = process.env.NEXT_PUBLIC_K_NUM;
-  const hisNumberUk = process.env.NEXT_PUBLIC_E_NUM_UK;
-  const hisNumberIt = process.env.NEXT_PUBLIC_E_NUM_IT;
+  const hisNumber = process.env.NEXT_PUBLIC_E_NUM;
 
   return (
     <section
@@ -130,32 +129,19 @@ const InfoSection = ({ language }) => {
             </a>
           </p>
           <p translate="no" className="max-sm:flex max-sm:flex-col">
-            <span className="font-bold">Karolina: </span>{" "}
+            <span className="font-bold">Như Quỳnh: </span>{" "}
             <a href={`tel:${herNumber.replace(/\s+/g, "")}`} target="_blank">
               {herNumber}
             </a>
           </p>
           <p translate="no" className="max-sm:flex max-sm:flex-col">
-            <span className="font-bold">Emanuele: </span>{" "}
-            <span>
+            <span className="font-bold">Linh Nhi: </span>{" "}
               <a
-                href={`tel:${hisNumberUk.replace(/\s+/g, "")}`}
+                href={`tel:${hisNumber.replace(/\s+/g, "")}`}
                 target="_blank"
               >
-                {hisNumberUk}
-              </a>{" "}
-              {"(UK)"}
-              <span className="max-sm:hidden">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-            </span>
-            <span>
-              <a
-                href={`tel:${hisNumberIt.replace(/\s+/g, "")}`}
-                target="_blank"
-              >
-                {hisNumberIt}
-              </a>{" "}
-              {"(IT)"}
-            </span>
+                {hisNumber}
+              </a>
           </p>
         </div>
       </div>

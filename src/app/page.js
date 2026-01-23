@@ -17,7 +17,7 @@ import {
   InfoSection,
   RSVPSection,
   RegistrySection,
-  MusicSection,
+  AttendingGuestsSection,
   BackgroundAudio,
 } from "@/components";
 import { useState as useReactState } from "react";
@@ -65,7 +65,7 @@ export default function Home() {
             <InfoSection language={language} />
             <RSVPSection language={language} />
             <RegistrySection language={language} />
-            <MusicSection language={language} />
+            <AttendingGuestsSection language={language} />
           </div>
         </>
       )}

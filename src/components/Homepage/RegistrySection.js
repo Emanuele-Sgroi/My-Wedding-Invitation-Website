@@ -17,11 +17,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { IoCopyOutline } from "react-icons/io5";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import translations from "@/utils/translations";
 
@@ -36,34 +31,12 @@ const RegistrySection = ({ language }) => {
     button,
     thanks,
     error_from_api,
-    error_incorrect_password,
-    error_insert_password,
-    account_holder,
-    iban,
-    bank_name,
-    bic,
-    sort_code,
-    account_number,
-    eur,
-    gbp,
-    pln,
-    toast_copied,
-    toast_error,
-    dialog_title,
-    placeholder,
-    submit_button,
-    copy_all,
   } = translations[language].registry_section;
 
-  // States for managing the input password and showing/hiding it
-  const [password, setPassword] = useState("");
-  const [viewPassword, setViewPassword] = useState(false);
-
-  const [isValid, setIsValid] = useState(null); // null means no attempt yet
   const [loading, setLoading] = useState(false);
   const [errorText, setErrorText] = useState(""); // Error message text
   const [paymentInfo, setPaymentInfo] = useState(null); // Stores payment info
-  const { toast } = useToast(); // Hook to trigger toast messages
+  const [dialogOpen, setDialogOpen] = useState(false); // Track dialog open state
   const dialogRef = useRef(null); // Reference to adjust the dialog position
 
   // Variants for the framer motion animation
@@ -90,126 +63,31 @@ const RegistrySection = ({ language }) => {
       <div key={index} className="w-[2px] h-[5px] my-[3px] bg-gold" />
     ));
 
-  // Handles submitting the password to retrieve payment information
-  const handlePasswordSubmit = async (event) => {
-    event.preventDefault();
-
-    if (password.length > 0) {
-      setLoading(true);
-      // Path for opening admin page. No need to protect this too much as this is like a hidden button for convenience and admin page has an auth
-      if (password === process.env.NEXT_PUBLIC_ADMIN_ACCESS_PASSWORD) {
-        window.open("/admin", "_blank"); // Redirect to admin page
-        setLoading(false);
-        setIsValid(false);
-        setErrorText(error_incorrect_password);
-      } else {
-        try {
-          // Check password from the server
-          const response = await fetch("/api/check-password", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ password }),
-          });
-
-          const result = await response.json();
-          // Check if the password is correct
-          if (result.success) {
-            const response = await fetch("/api/get-payment-info", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ password }),
-            });
-
-            const paymentResult = await response.json();
-
-            if (paymentResult.success) {
-              // Password is valid, and payment info is available
-              setIsValid(true);
-              setPaymentInfo(paymentResult.paymentInfo);
-              console.log(paymentInfo);
-              setErrorText("");
-            } else {
-              setIsValid(false);
-              setErrorText(error_from_api);
-            }
-          } else {
-            setIsValid(false);
-            setErrorText(error_incorrect_password);
-          }
-        } catch (error) {
-          // Handle any API errors
-          setIsValid(false);
-          setErrorText(error_from_api);
-          console.log(error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    } else {
-      setErrorText(error_insert_password); // Show error if password is empty
+  // Load QR code from public folder (no Firebase Storage needed)
+  const loadPaymentInfo = async () => {
+    setLoading(true);
+    setErrorText("");
+    try {
+      // QR code is stored in public/images folder - completely free!
+      // Just set paymentInfo to indicate QR code is available
+      setPaymentInfo({ qrCode: "/images/qr-code.png" });
+      setErrorText("");
+    } catch (error) {
+      setErrorText(error_from_api);
+      console.log(error);
+    } finally {
       setLoading(false);
-      setIsValid(null);
     }
   };
 
-  // Copies all payment details of a currency to the clipboard
-  const copyToClipboardEntireBox = (currency) => {
-    let copiedText = "";
-
-    if (currency === "eur") {
-      copiedText += `${account_holder} ${paymentInfo.EUR.accountHolder}\n${iban} ${paymentInfo.EUR.iban}\n${bank_name} ${paymentInfo.EUR.bankName}\n${bic} ${paymentInfo.EUR.bic}`;
-    } else if (currency === "gbp") {
-      copiedText += `${account_holder} ${paymentInfo.GBP.accountHolder}\n${sort_code} ${paymentInfo.GBP.sortCode}\n${account_number} ${paymentInfo.GBP.accountNumber}\n${bank_name} ${paymentInfo.GBP.bankName}`;
-    } else if (currency === "pln") {
-      copiedText += `${account_holder} ${paymentInfo.PLN.accountHolder}\n${iban} ${paymentInfo.PLN.iban}\n${account_number} ${paymentInfo.PLN.accountNumber}\n${bank_name} ${paymentInfo.PLN.bankName}`;
-    } else {
-      return;
+  // Handle dialog open - load payment info every time dialog opens
+  const handleDialogOpenChange = (open) => {
+    setDialogOpen(open);
+    if (open) {
+      loadPaymentInfo();
     }
-
-    navigator.clipboard
-      .writeText(copiedText)
-      .then(() => {
-        toast({
-          title: toast_copied,
-        });
-      })
-      .catch((err) => {
-        console.error("Failed to copy: ", err);
-        toast({
-          variant: "destructive",
-          title: toast_error,
-        });
-      });
   };
 
-  // Copies a specific text to the clipboard
-  const copyTextToCLipboard = (text) => {
-    let copiedText = `${text}`;
-
-    navigator.clipboard
-      .writeText(copiedText)
-      .then(() => {
-        toast({
-          title: toast_copied,
-        });
-      })
-      .catch((err) => {
-        console.error("Failed to copy: ", err);
-        toast({
-          variant: "destructive",
-          title: toast_error,
-        });
-      });
-  };
-
-  // Format sort code from 123456 to 12-34-56
-  const formatSortCode = (sortCode) => {
-    return sortCode.replace(/(\d{2})(?=\d)/g, "$1-").slice(0, 8);
-  };
 
   // Effect to handle scrolling when inputs are focused (mobile)
   useEffect(() => {
@@ -309,7 +187,7 @@ const RegistrySection = ({ language }) => {
           variants={secondaryVariants}
           viewport={{ once: true, amount: 0.2 }}
         >
-          <Dialog>
+          <Dialog open={dialogOpen} onOpenChange={handleDialogOpenChange}>
             <DialogTrigger
               translate="no"
               className="bg-transparent text-gold border border-gold px-3 py-2 rounded-full mt-6  transition-all duration-300 hover:bg-gold hover:text-white"
@@ -325,350 +203,57 @@ const RegistrySection = ({ language }) => {
                   translate="no"
                   className="text-[22px] md:text-3xl font-bold"
                 >
-                  {!isValid && !paymentInfo
-                    ? dialog_title.before
-                    : dialog_title.after}
+                  {loading ? "Đang tải..." : paymentInfo ? "QR Code Chuyển Khoản" : "Thông tin ngân hàng"}
                 </DialogTitle>
                 <DialogDescription className="flex flex-col items-center">
-                  {!isValid && !paymentInfo && (
-                    <>
-                      <form
-                        onSubmit={handlePasswordSubmit}
-                        className="w-full flex flex-col items-center"
-                      >
-                        <div className="w-full h-[42px] mb-4 flex border  py-0 pl-0 pr-2 rounded-lg">
-                          <Input
-                            translate="no"
-                            autoComplete="off"
-                            autoCorrect="off"
-                            spellCheck="false"
-                            type={viewPassword ? "text" : "password"}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder={placeholder}
-                            className="font-serif mb-4 focus:outline-none focus:ring-0 text-lg border-none"
-                          />
-                          <button
-                            type="button"
-                            translate="no"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setViewPassword(!viewPassword);
-                            }}
-                            className="active:bg-zinc-200 rounded-full"
-                          >
-                            {viewPassword ? (
-                              <FaRegEye size={20} />
-                            ) : (
-                              <FaRegEyeSlash size={20} />
-                            )}
-                          </button>
-                        </div>
-                        <Button
-                          translate="no"
-                          type="submit"
-                          disabled={loading}
-                          className="bg-[#233d74] hover:bg-gold text-lg w-fit"
-                        >
-                          {loading
-                            ? submit_button.loading
-                            : submit_button.submit}
-                        </Button>
-                        {isValid === false && errorText.length > 0 && (
-                          <span
-                            translate="no"
-                            className="text-red-500 mt-2 text-lg"
-                          >
-                            {errorText}
-                          </span>
-                        )}
-                        {isValid === null && errorText.length > 0 && (
-                          <span
-                            translate="no"
-                            className="text-red-500 mt-2 text-lg"
-                          >
-                            {errorText}
-                          </span>
-                        )}
-                      </form>
-                    </>
+                  {loading && (
+                    <div className="w-full flex justify-center items-center py-8">
+                      <p translate="no">Đang tải QR code...</p>
+                    </div>
+                  )}
+                  {!loading && errorText.length > 0 && (
+                    <span
+                      translate="no"
+                      className="text-red-500 mt-2 text-lg"
+                    >
+                      {errorText}
+                    </span>
                   )}
                 </DialogDescription>
               </DialogHeader>
-              {isValid && paymentInfo && (
-                <div className="w-full h-full max-h-[75svh] relative overflow-auto flex flex-col justify-start items-start px-2 py-2 gap-4">
-                  <div className="w-full text-left flex flex-col justify-start items-start">
-                    <div className="w-full flex justify-between gap-2">
-                      <h5 translate="no" className="font-sans font-semibold">
-                        {eur}
-                      </h5>{" "}
-                      <button
-                        translate="no"
-                        onClick={() => copyToClipboardEntireBox("eur")}
-                        className="flex items-center gap-1 mr-2 text-sm text-[#233d74] underline underline-offset-2"
-                      >
-                        <IoCopyOutline /> {copy_all}
-                      </button>
-                    </div>
-                    <div className="w-full flex flex-col items-start justify-start p-4 bg-gray-100">
-                      <div className="w-full flex items-center justify-between gap-1">
-                        {" "}
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">
-                            {account_holder}
-                          </span>
-                          {paymentInfo.EUR.accountHolder}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.EUR.accountHolder)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col  sm:gap-1"
-                        >
-                          <span className="font-semibold">{iban}</span>
-                          {paymentInfo.EUR.iban}
-                        </p>{" "}
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.EUR.iban)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col  sm:gap-1"
-                        >
-                          <span className="font-semibold">{bank_name}</span>
-                          {paymentInfo.EUR.bankName}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.EUR.bankName)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">{bic}</span>
-                          {paymentInfo.EUR.bic}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.EUR.bic)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="w-full text-left flex flex-col justify-start items-start">
-                    <div className="w-full flex justify-between gap-2">
-                      <h5 translate="no" className="font-sans font-semibold">
-                        {gbp}
-                      </h5>
-                      <button
-                        translate="no"
-                        onClick={() => copyToClipboardEntireBox("gbp")}
-                        className="flex items-center gap-1 mr-2 text-sm text-[#233d74] underline underline-offset-2"
-                      >
-                        <IoCopyOutline /> {copy_all}
-                      </button>
-                    </div>
-                    <div className="w-full flex flex-col items-start justify-start p-4 bg-gray-100">
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">
-                            {account_holder}
-                          </span>
-                          {paymentInfo.GBP.accountHolder}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.GBP.accountHolder)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">{sort_code}</span>
-                          {formatSortCode(paymentInfo.GBP.sortCode)}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.GBP.sortCode)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">
-                            {account_number}
-                          </span>
-                          {paymentInfo.GBP.accountNumber}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.GBP.accountNumber)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">{bank_name}</span>
-                          {paymentInfo.GBP.bankName}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.GBP.bankName)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="w-full text-left flex flex-col justify-start items-start">
-                    <div className="w-full flex justify-between gap-2">
-                      <h5 translate="no" className="font-sans font-semibold">
-                        {pln}
-                      </h5>{" "}
-                      <button
-                        translate="no"
-                        onClick={() => copyToClipboardEntireBox("pln")}
-                        className="flex items-center gap-1 mr-2 text-sm text-[#233d74] underline underline-offset-2"
-                      >
-                        <IoCopyOutline /> {copy_all}
-                      </button>
-                    </div>
-                    <div className="w-full flex flex-col items-start justify-start p-4 bg-gray-100">
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">
-                            {account_holder}
-                          </span>
-                          {paymentInfo.PLN.accountHolder}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.PLN.accountHolder)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className=" font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">{iban}</span>
-                          {paymentInfo.PLN.iban}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.PLN.iban)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">
-                            {account_number}
-                          </span>
-                          {paymentInfo.PLN.accountNumber}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.PLN.accountNumber)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between gap-1">
-                        <p
-                          translate="no"
-                          className="font-sans font-light text-left flex flex-col sm:gap-1"
-                        >
-                          <span className="font-semibold">{bank_name}</span>
-                          {paymentInfo.PLN.bankName}
-                        </p>
-                        <button
-                          onClick={() =>
-                            copyTextToCLipboard(paymentInfo.PLN.bankName)
-                          }
-                          className="mb-4"
-                        >
-                          <IoCopyOutline size={18} />
-                        </button>
-                      </div>
-                    </div>
+              {paymentInfo && !loading && (
+                <div className="w-full h-full max-h-[75svh] relative overflow-auto flex flex-col justify-center items-center px-4 py-6 gap-6">
+                  {/* QR Code Display - Loaded from public/images folder (FREE!) */}
+                  <div className="w-full flex flex-col items-center justify-center">
+                    <Image
+                      src="/images/qr-code.png"
+                      alt="QR Code for Bank Transfer"
+                      width={300}
+                      height={300}
+                      quality={100}
+                      className="w-[280px] h-[280px] md:w-[300px] md:h-[300px] object-contain bg-white p-4 rounded-lg shadow-lg"
+                      onError={(e) => {
+                        // If QR code image doesn't exist, show helpful message
+                        e.target.style.display = 'none';
+                        const errorDiv = e.target.nextElementSibling;
+                        if (!errorDiv || !errorDiv.classList.contains('qr-error')) {
+                          const errorMsg = document.createElement('div');
+                          errorMsg.className = 'qr-error text-center text-gray-600';
+                          errorMsg.innerHTML = `
+                            <p>QR code chưa được thêm vào.</p>
+                            <p class="text-sm mt-2">Vui lòng đặt file QR code tại: <code class="bg-gray-200 px-2 py-1 rounded">public/images/qr-code.png</code></p>
+                            <p class="text-xs mt-2 text-gray-500">QR code not added. Please place QR code file at: <code class="bg-gray-200 px-2 py-1 rounded">public/images/qr-code.png</code></p>
+                          `;
+                          e.target.parentElement.appendChild(errorMsg);
+                        }
+                      }}
+                    />
+                    <p translate="no" className="text-center text-sm text-gray-600 mt-4">
+                      Võ Như Quỳnh / ViettinBank: 107879751877
+                    </p>
+                    <p translate="no" className="text-center text-sm text-gray-600 mt-4">
+                      Quét mã QR để chuyển khoản / Scan QR code to transfer
+                    </p>
                   </div>
                 </div>
               )}
