@@ -1,5 +1,5 @@
 /**
- * @file ScheduleSection.js
+ * @file WelcomeSection.js
  * @description This component renders the Welcome section. Multilingual!
  * @author Emanuele Sgroi
  * @date 19 October 2024
@@ -14,6 +14,10 @@ import Image from "next/image";
 import { getCountdown } from "@/utils/countdownHelper";
 import { Link as ScrollLink } from "react-scroll";
 import Tilt from "react-parallax-tilt";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/autoplay';
 
 const WelcomeSection = ({ language }) => {
   const [countdown, setCountdown] = useState(null); // Set initial state as null
@@ -45,9 +49,29 @@ const WelcomeSection = ({ language }) => {
     button,
   } = translations[language].welcome_section;
 
-  // If it's still rendering on the server, don't show the countdown
+  // If it's still rendering on the server, show loading skeleton
   if (!isClient || countdown === null) {
-    return null;
+    return (
+      <section
+        id="welcome-section"
+        className="h-svh min-h-svh w-full relative overflow-hidden"
+      >
+        <div className="absolute w-full h-full min-h-svh flex flex-col justify-center items-center z-10 gap-0">
+          <div className="animate-pulse">
+            <div className="h-8 w-32 bg-gray-300 rounded mb-4"></div>
+            <div className="flex gap-4">
+              <div className="h-12 w-24 bg-gray-300 rounded"></div>
+              <div className="h-12 w-8 bg-gray-300 rounded"></div>
+              <div className="h-12 w-24 bg-gray-300 rounded"></div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute md:fixed h-full w-full flex min-h-svh justify-center items-center z-0">
+          <div className="overlay"></div>
+          <div className="h-full w-full bg-gray-200 animate-pulse"></div>
+        </div>
+      </section>
+    );
   }
 
   return (
@@ -149,40 +173,86 @@ const WelcomeSection = ({ language }) => {
       <div className="absolute md:fixed h-full w-full flex min-h-svh justify-center items-center z-0">
         <div className="overlay"></div>
 
-        {/* First Image */}
-        <div className="h-full flex-1 max-md:hidden z-0">
-          <Image
-            src={images.welcome_1}
-            alt={`welcom_1`}
-            width={500}
-            height={700}
-            quality={100}
-            className="w-full h-full object-cover object-center z-0"
-          />
+        {/* Desktop: Static Images */}
+        <div className="hidden md:flex h-full w-full">
+          {/* First Image */}
+          <div className="h-full flex-1 z-0">
+            <Image
+              src={images.welcome_1}
+              alt={`welcome_1`}
+              width={500}
+              height={700}
+              quality={100}
+              className="w-full h-full object-cover object-center z-0"
+            />
+          </div>
+
+          {/* Second Image */}
+          <div className="h-full flex-1 z-0">
+            <Image
+              src={images.welcome_2}
+              alt={`welcome_2`}
+              width={500}
+              height={700}
+              quality={100}
+              className="w-full h-full object-cover object-center z-0"
+            />
+          </div>
+
+          {/* Third Image */}
+          <div className="h-full flex-1 z-0">
+            <Image
+              src={images.welcome_3}
+              alt={`welcome_3`}
+              width={500}
+              height={700}
+              quality={100}
+              className="w-full h-full object-cover object-center z-0"
+            />
+          </div>
         </div>
 
-        {/* Second Image */}
-        <div className="h-full flex-1 z-0">
-          <Image
-            src={images.welcome_2}
-            alt={`welcom_2`}
-            width={500}
-            height={700}
-            quality={100}
-            className="w-full h-full object-cover object-center z-0"
-          />
-        </div>
-
-        {/* Third Image */}
-        <div className="h-full flex-1 max-md:hidden  z-0">
-          <Image
-            src={images.welcome_3}
-            alt={`welcom_3`}
-            width={500}
-            height={700}
-            quality={100}
-            className="w-full h-full object-cover object-center z-0"
-          />
+        {/* Mobile: Swiper Carousel */}
+        <div className="md:hidden h-full w-full">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={0}
+            slidesPerView={1}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            loop={true}
+            className="h-full w-full"
+          >
+            <SwiperSlide className="h-full w-full">
+              <Image
+                src={images.welcome_1}
+                alt={`welcome_1`}
+                fill
+                quality={100}
+                className="object-cover object-center z-0"
+              />
+            </SwiperSlide>
+            <SwiperSlide className="h-full w-full">
+              <Image
+                src={images.welcome_2}
+                alt={`welcome_2`}
+                fill
+                quality={100}
+                className="object-cover object-center z-0"
+              />
+            </SwiperSlide>
+            <SwiperSlide className="h-full w-full">
+              <Image
+                src={images.welcome_3}
+                alt={`welcome_3`}
+                fill
+                quality={100}
+                className="object-cover object-center z-0"
+              />
+            </SwiperSlide>
+          </Swiper>
         </div>
       </div>
     </section>
