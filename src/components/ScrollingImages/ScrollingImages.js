@@ -1,11 +1,11 @@
 /**
  * @file ScrollingImages.js
- * @description Component that renders multiple layers of scrolling images with parallax effects, including animated text. This component is usd is 'SaveTheDate'.
+ * @description Component that renders multiple layers of scrolling images with parallax effects, including animated text. This component is used in 'SaveTheDate'.
  * @author Emanuele Sgroi
  * @date 19 October 2024
  */
 
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import images from "@/utils/imagesImport";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -28,35 +28,33 @@ const ScrollingImages = () => {
   // Parallax effect for text
   const textX = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
-  // Group for first layer of images
-  const group1 = [
+  // Memoize image groups to prevent unnecessary re-renders
+  const group1 = useMemo(() => [
     images.g_1_1,
     images.g_1_2,
     images.g_1_3,
     images.g_1_4,
     images.g_1_5,
     images.g_1_6,
-  ];
+  ], []);
 
-  // Group for second layer of images
-  const group2 = [
+  const group2 = useMemo(() => [
     images.g_2_1,
     images.g_2_2,
     images.g_2_3,
     images.g_2_4,
     images.g_2_5,
     images.g_2_6,
-  ];
+  ], []);
 
-  // Group for third layer of images
-  const group3 = [
+  const group3 = useMemo(() => [
     images.g_3_1,
     images.g_3_2,
     images.g_3_3,
     images.g_3_4,
     images.g_3_5,
     images.g_3_6,
-  ];
+  ], []);
 
   return (
     <div
@@ -80,7 +78,8 @@ const ScrollingImages = () => {
                 alt={`image ${i + 1}`}
                 width={400}
                 height={400}
-                quality={100}
+                quality={75}
+                loading="lazy"
                 className="w-auto h-full object-cover object-center"
               />
             </div>
@@ -102,7 +101,8 @@ const ScrollingImages = () => {
                 alt={`image ${i + 1}`}
                 width={400}
                 height={400}
-                quality={100}
+                quality={75}
+                loading="lazy"
                 className="w-auto h-full object-cover object-center"
               />
             </div>
@@ -124,7 +124,8 @@ const ScrollingImages = () => {
                 alt={`image ${i + 1}`}
                 width={400}
                 height={400}
-                quality={100}
+                quality={75}
+                loading="lazy"
                 className="w-auto h-full object-cover object-center"
               />
             </div>
@@ -134,7 +135,7 @@ const ScrollingImages = () => {
 
       {/* Animated Text */}
       <motion.div
-        className="absolute bottom-[-12%]  md:bottom-[-15%] lg:bottom-[-16%] xl:bottom-[-18%] right-0 z-[3] flex items-center opacity-90"
+        className="absolute bottom-0 md:bottom-0 lg:bottom-0 xl:bottom-0 right-0 z-[3] flex items-center opacity-50"
         style={{ x: textX }}
       >
         <h1 className="text-gold font-bold text-[180px] md:text-[280px] lg:text-[380px] xl:text-[480px] drop-shadow-lg">

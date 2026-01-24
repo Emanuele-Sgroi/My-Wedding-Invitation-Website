@@ -141,8 +141,12 @@ const ScheduleSection = ({ language }) => {
             key={dayIndex}
             className="w-full flex flex-col items-center gap-8 z-10"
           >
-            <div className="w-[103px] h-[103px] md:w-[128px] md:h-[128px] lg:w-[148px] lg:h-[148px] flex justify-center items-center rounded-full border border-gold bg-blue">
-              <h3 translate="no" className="alex-brush mt-2 text-white">
+            <div className="w-[110px] h-[110px] md:w-[135px] md:h-[135px] lg:w-[155px] lg:h-[155px] flex justify-center items-center rounded-full border border-gold bg-blue">
+              <h3
+                translate="no"
+                className="alex-brush mt-2 text-white text-[11px] sm:text-[13px] md:text-[15px] lg:text-[17px] leading-tight text-wrap-balance"
+                style={{ textWrap: 'balance' }}
+              >
                 {day.day}
               </h3>
             </div>

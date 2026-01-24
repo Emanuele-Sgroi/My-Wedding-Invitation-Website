@@ -12,11 +12,12 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import images from "@/utils/imagesImport";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase/config";
 import { motion } from "framer-motion";
 import translations from "@/utils/translations";
 import { Footer } from "@/components";
+import styles from "./AttendingGuestsSection.module.css";
 
 const AttendingGuestsSection = ({ language }) => {
   // Variants for framer motion animation
@@ -43,43 +44,49 @@ const AttendingGuestsSection = ({ language }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch attending guests from Firestore
+  // Real-time fetch attending guests from Firestore using onSnapshot
   useEffect(() => {
-    const fetchAttendingGuests = async () => {
-      try {
-        setLoading(true);
-        // Get a reference to the "guests" collection
-        const guestsCollectionRef = collection(db, "guests");
+    // Get a reference to the "guests" collection
+    const guestsCollectionRef = collection(db, "guests");
 
-        // Fetch all guests first
-        const querySnapshot = await getDocs(guestsCollectionRef);
+    // Set up real-time listener
+    const unsubscribe = onSnapshot(
+      guestsCollectionRef,
+      (querySnapshot) => {
+        try {
+          const guestsArray = [];
+          querySnapshot.forEach((doc) => {
+            const guestData = { id: doc.id, ...doc.data() };
+            // Only include guests who are attending
+            if (guestData.attending === "Yes") {
+              guestsArray.push(guestData);
+            }
+          });
 
-        const guestsArray = [];
-        querySnapshot.forEach((doc) => {
-          const guestData = { id: doc.id, ...doc.data() };
-          // Only include guests who are attending
-          if (guestData.attending === "Yes") {
-            guestsArray.push(guestData);
-          }
-        });
+          // Sort by name alphabetically
+          guestsArray.sort((a, b) => {
+            const nameA = a.name?.toLowerCase() || "";
+            const nameB = b.name?.toLowerCase() || "";
+            return nameA.localeCompare(nameB);
+          });
 
-        // Sort by name alphabetically
-        guestsArray.sort((a, b) => {
-          const nameA = a.name?.toLowerCase() || "";
-          const nameB = b.name?.toLowerCase() || "";
-          return nameA.localeCompare(nameB);
-        });
-
-        setAttendingGuests(guestsArray);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching attending guests:", error);
+          setAttendingGuests(guestsArray);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error processing attending guests:", error);
+          setError(error.message);
+          setLoading(false);
+        }
+      },
+      (error) => {
+        console.error("Error listening to attending guests:", error);
         setError(error.message);
         setLoading(false);
       }
-    };
+    );
 
-    fetchAttendingGuests();
+    // Clean up listener on unmount
+    return () => unsubscribe();
   }, []);
 
   // Group guests by guestSide if needed
@@ -109,10 +116,7 @@ const AttendingGuestsSection = ({ language }) => {
   return (
     <section
       id="attending-guests-section"
-      className="relative w-full min-h-[120svh] md:min-h-svh bg-center bg-no-repeat bg-cover flex flex-col justify-start overflow-hidden"
-      style={{
-        backgroundImage: `url(${images.collage.src})`,
-      }}
+      className={styles.attendingGuestsSection}
     >
       <motion.div
         initial="hidden"

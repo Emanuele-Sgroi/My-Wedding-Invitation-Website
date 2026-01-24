@@ -252,13 +252,13 @@ const SimpleRSVPSection = ({ language }) => {
               <div className="w-full flex flex-col items-center sm:items-start">
                 <label
                   translate="no"
-                  className="font-semibold mb-2 text-center sm:text-left font-cormorant"
+                  className="font-semibold mb-2 text-center sm:text-left"
                 >
                   Họ tên / Name *
                 </label>
                 <input
                   type="text"
-                  className="w-full py-2 px-3 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant text-base"
+                  className="w-full py-2 px-3 rounded-md bg-white/90 backdrop-blur-sm border border-gold focus:outline-none focus:ring-2 focus:ring-gold transition-all duration-300 font-cormorant text-base"
                   value={guestName}
                   onChange={(e) => setGuestName(e.target.value)}
                   translate="no"
@@ -268,14 +268,14 @@ const SimpleRSVPSection = ({ language }) => {
 
               {/* Attendance */}
               <div className="w-full flex flex-col items-center sm:items-start">
-                <p translate="no" className="font-semibold mb-2 text-center sm:text-left font-cormorant">
+                <p translate="no" className="font-semibold mb-2 text-center sm:text-left">
                   {single_guest_2}
                 </p>
                 <Select
                   value={attendance}
                   onValueChange={(value) => setAttendance(value)}
                 >
-                  <SelectTrigger className="w-full sm:w-[230px] px-4 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant">
+                  <SelectTrigger className="w-full sm:w-[230px] px-4 rounded-md bg-white/90 backdrop-blur-sm border border-gold focus:ring-2 focus:ring-gold transition-all duration-300 font-cormorant">
                     <SelectValue
                       translate="no"
                       placeholder={answers.unknown}
@@ -299,7 +299,7 @@ const SimpleRSVPSection = ({ language }) => {
               <div className="w-full flex flex-col items-center sm:items-start">
                 <textarea
                   placeholder={note_placeholder}
-                  className="w-full p-3 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant text-base min-h-[100px] resize-y"
+                  className="w-full p-3 rounded-md bg-white/90 backdrop-blur-sm border border-gold focus:outline-none focus:ring-2 focus:ring-gold transition-all duration-300 font-cormorant text-base min-h-[100px] resize-y"
                   value={specialRequests}
                   translate="no"
                   onChange={(e) => setSpecialRequests(e.target.value)}
@@ -320,7 +320,7 @@ const SimpleRSVPSection = ({ language }) => {
               {errorMessage && (
                 <p
                   translate="no"
-                  className="text-red-500 mt-2 text-center sm:text-left font-cormorant"
+                  className="text-red-500 mt-2 text-center sm:text-left"
                 >
                   {errorMessage}
                 </p>
@@ -329,11 +329,11 @@ const SimpleRSVPSection = ({ language }) => {
               {/* Thank you */}
               {submitted && !errorMessage && (
                 <div className="mt-4 w-full flex flex-col items-center sm:items-start">
-                  <p translate="no" className="text-center sm:text-left font-cormorant">
+                  <p translate="no" className="text-center sm:text-left">
                     <span className="font-bold">{rsvp_success.thanks}</span>{" "}
                     {rsvp_success.submitted}
                   </p>
-                  <p translate="no" className="text-center sm:text-left font-cormorant mt-2">
+                  <p translate="no" className="text-center sm:text-left mt-2">
                     {rsvp_success.change_by.map((item, index) =>
                       typeof item === "string" ? (
                         item

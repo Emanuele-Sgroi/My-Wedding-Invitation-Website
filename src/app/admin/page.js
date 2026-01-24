@@ -18,7 +18,7 @@ import {
 import { MdDashboard } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
 import { GiTakeMyMoney } from "react-icons/gi";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
 export default function Admin() {
@@ -69,24 +69,36 @@ export default function Admin() {
     };
   }, []);
 
-  // Fetch Guests List
+  // Real-time fetch Guests List using onSnapshot
   useEffect(() => {
     if (isAuthenticated) {
-      // Fetch guests from Firestore
-      const fetchGuests = async () => {
-        setLoading(true);
-        try {
-          const guestsCollectionRef = collection(db, "guests");
-          const querySnapshot = await getDocs(guestsCollectionRef);
-          const guestsArray = querySnapshot.docs.map((doc) => doc.data());
-          setGuests(guestsArray);
-          setLoading(false);
-        } catch (error) {
-          console.error("Error fetching guests:", error);
+      // Get a reference to the "guests" collection
+      const guestsCollectionRef = collection(db, "guests");
+
+      // Set up real-time listener
+      const unsubscribe = onSnapshot(
+        guestsCollectionRef,
+        (querySnapshot) => {
+          try {
+            const guestsArray = querySnapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setGuests(guestsArray);
+            setLoading(false);
+          } catch (error) {
+            console.error("Error processing guests:", error);
+            setLoading(false);
+          }
+        },
+        (error) => {
+          console.error("Error listening to guests:", error);
           setLoading(false);
         }
-      };
-      fetchGuests();
+      );
+
+      // Clean up listener on unmount or when isAuthenticated changes
+      return () => unsubscribe();
     }
   }, [isAuthenticated]);
 

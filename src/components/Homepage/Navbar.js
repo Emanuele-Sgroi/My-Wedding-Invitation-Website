@@ -41,13 +41,13 @@ const SECTION_IDS = {
 };
 
 /**
- * Navbar Component
+ * NavbarSection Component
  * @param {Object} props - Component props
  * @param {string} props.language - Current language
  * @param {string} props.detectedLanguage - Detected language
  * @param {Function} props.setLanguage - Function to set language
  */
-const Navbar = ({ language, detectedLanguage, setLanguage }) => {
+const NavbarSection = ({ language, detectedLanguage, setLanguage }) => {
   // State management
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -69,8 +69,8 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
     return translations[language].navbar;
   }, [language, isClient]);
 
-  // Memoized navigation elements
-  const navElements = useMemo(() => {
+  // Memoized navigation items
+  const navigationItems = useMemo(() => {
     if (!translationsData) return [];
 
     const { welcome, save_the_date, schedule, info, rsvp, registry, music } =
@@ -206,8 +206,8 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
     }
   }, [isMobile, closeMenu]);
 
-  // Memoized nav link props
-  const navLinkProps = useMemo(
+  // Memoized nav link config
+  const navLinkConfig = useMemo(
     () => ({
       smooth: true,
       duration: scrollConfig.duration,
@@ -216,18 +216,18 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
     [scrollConfig.duration]
   );
 
-  // Render desktop navigation
-  const renderDesktopNav = useMemo(
+  // Desktop Navigation
+  const DesktopNavigation = useMemo(
     () => (
       <ul className="w-full hidden lg:flex justify-center max-[1130px]:justify-start px-4 gap-5 xl:gap-8">
-        {navElements.map((el) => (
+        {navigationItems.map((el) => (
           <li key={el.link}>
             <ScrollLink
               translate="no"
               to={el.link}
-              {...navLinkProps}
+              {...navLinkConfig}
               offset={scrollConfig.offset}
-              className={`${navLinkProps.className} max-xl:text-[18px]`}
+              className={`${navLinkConfig.className} max-xl:text-[18px]`}
             >
               {el.name}
             </ScrollLink>
@@ -235,11 +235,11 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
         ))}
       </ul>
     ),
-    [navElements, navLinkProps, scrollConfig.offset]
+    [navigationItems, navLinkConfig, scrollConfig.offset]
   );
 
-  // Render mobile menu
-  const renderMobileMenu = useMemo(
+  // Mobile Menu
+  const MobileMenu = useMemo(
     () => (
       <div
         className={`fixed top-0 left-0 w-full h-screen bg-cream transition-transform duration-700 ease-in-out z-50 lg:hidden ${
@@ -262,14 +262,14 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
 
           {/* Navigation Links */}
           <ul className="w-full h-full flex flex-col gap-8 justify-center items-center px-6">
-            {navElements.map((el) => (
+            {navigationItems.map((el) => (
               <li key={el.link}>
                 <ScrollLink
                   onClick={handleLinkClick}
                   to={el.link}
-                  {...navLinkProps}
+                  {...navLinkConfig}
                   offset={scrollConfig.menuOffset}
-                  className={`${navLinkProps.className} text-lg`}
+                  className={`${navLinkConfig.className} text-lg`}
                 >
                   {el.name}
                 </ScrollLink>
@@ -281,8 +281,8 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
     ),
     [
       isMenuOpen,
-      navElements,
-      navLinkProps,
+      navigationItems,
+      navLinkConfig,
       scrollConfig.menuOffset,
       closeMenu,
       handleLinkClick,
@@ -312,7 +312,7 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
       role="navigation"
       aria-label="Main navigation"
     >
-      {renderDesktopNav}
+      {DesktopNavigation}
 
       {/* Mobile Menu Button */}
       <button
@@ -335,9 +335,9 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
       )}
 
       {/* Mobile Menu */}
-      {renderMobileMenu}
+      {MobileMenu}
     </nav>
   );
 };
 
-export default Navbar;
+export default NavbarSection;

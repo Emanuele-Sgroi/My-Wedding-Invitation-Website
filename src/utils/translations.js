@@ -10,8 +10,8 @@ const translations = {};
 // English translations
 translations.en = {
   couple: {
-    her: "Như Quỳnh",
-    him: "Linh Nhi",
+    her: "N.Quỳnh",
+    him: "L.Nhi",
     footer_her: "Như Quỳnh",
     footer_him: "Linh Nhi",
   },
@@ -22,7 +22,7 @@ translations.en = {
     info: "Info",
     rsvp: "RSVP",
     registry: "Registry",
-    music: "Music",
+    listRegister: "List Register",
   },
   welcome_section: {
     small_text: "The wedding of...",
@@ -128,14 +128,14 @@ translations.en = {
     button: { submit: "Submit RSVP", loading: "Submitting..." },
   },
   registry_section: {
-    title: { main: "Registry", sub: "List" },
+    title: { main: "Thank You", sub: "And Wedding Gifts" },
     description_1: "Your presence is the most precious gift!",
     description_2:
-      "However, if you wish to give a gift, we appreciate contributions via bank transfer to build our future together.",
+      "If you would like to celebrate with us in a modern and convenient way, we have prepared a QR code so you can send your wishes and wedding gift online 💌",
     description_3:
-      "In lieu of flowers and physical gifts, we would also be delighted to receive scratch cards or lottery tickets as a fun way to celebrate.",
+      "Whether it’s a hug, a kind message, or simply keeping us in your thoughts on this special day, we already feel truly grateful and happy.",
     description_4:
-      "International guests are kindly requested to consider sending gifts via bank transfer. Click the button below and enter the password found on the invitation card.",
+      "If you are unable to attend in person, a simple scan of the QR code on our wedding website is more than enough for us to feel your love and support. Thank you from the bottom of our hearts, and we hope to see you very soon 🤍",
     button: "View Bank Information",
     thanks: "THANK YOU!",
     error_from_api: "There was an error. Please try again later or contact us",
@@ -182,19 +182,19 @@ translations.en = {
 // Vietnamese translations
 translations.vi = {
   couple: {
-    her: "Như Quỳnh",
-    him: "Linh Nhi",
+    her: "N.Quỳnh",
+    him: "L.Nhi",
     footer_her: "Như Quỳnh",
     footer_him: "Linh Nhi",
   },
   navbar: {
     welcome: "Chào mừng",
-    save_the_date: "Save the Date",
+    save_the_date: "Lưu ngày",
     schedule: "Lịch trình",
     info: "Thông tin",
     rsvp: "Xác nhận",
-    registry: "Registry",
-    music: "Playlist",
+    registry: "Đăng ký",
+    listRegister: "Danh sách đăng ký",
   },
   welcome_section: {
     small_text: "Đám cưới của...",
@@ -206,11 +206,11 @@ translations.vi = {
     minute: "Phút",
     seconds: "Giây",
     second: "Giây",
-    button: "Save the Date",
+    button: "Lưu ngày",
   },
   saveTheDate_section: {
     title: "LƯU",
-    title_cursive: "Ngày",
+    title_cursive: "NGÀY",
     date: "5,6 tháng 2 năm 2026",
     place: "Hậu Mỹ Phú, Cái Bè, Tiền Giang",
     story_1: "Chúng tôi gặp nhau",
@@ -219,7 +219,7 @@ translations.vi = {
     story_3_past: "Chúng tôi đã kết hôn",
   },
   schedule_section: {
-    title: { main: "LỊCH", sub: "Trình tự" },
+    title: { main: "LỊCH", sub: "Trình" },
     description:
       "Tiệc trước đám cưới vào Thứ Năm, 5 tháng 2. Lễ cưới chính thức vào Thứ Sáu, 6 tháng 2 năm 2026.",
     day_1: {
@@ -263,14 +263,14 @@ translations.vi = {
     contact: { title: "Liên hệ" },
   },
   rsvp_section: {
-    top_title: "RSVP",
+    top_title: "xác nhận tham dự",
     title: { main: "Xác nhận", sub: "Tham dự" },
     description_1: [
       { bold: true, text: "Vui lòng RSVP trước ngày 5 tháng 2 năm 2026!" },
       " Hãy tìm tên bạn trong form và xác nhận tham dự.",
     ],
     description_2:
-      "Vui lòng để lại ghi chú nếu bạn có yêu cầu đặc biệt, chế độ ăn kiêng, hoặc điều gì khác muốn thông báo.",
+      "Vui lòng để lại ghi chú nếu bạn có yêu cầu đặc biệt, chế độ ăn chay, hoặc điều gì khác muốn thông báo.",
     label: "Tìm tên bạn trong danh sách khách mời",
     placeholder: "Tìm tên của bạn",
     no_found: "Không tìm thấy khách mời với tên này",
@@ -302,14 +302,14 @@ translations.vi = {
     button: { submit: "Gửi RSVP", loading: "Đang gửi..." },
   },
   registry_section: {
-    title: { main: "Registry", sub: "Danh sách" },
-    description_1: "Sự hiện diện của bạn là món quà quý giá nhất!",
+    title: { main: "Lời cảm ơn", sub: "Và quà cưới" },
+    description_1: "Sự hiện diện của bạn trong ngày vui là niềm hạnh phúc lớn nhất của tụi mình.",
     description_2:
-      "Tuy nhiên, nếu bạn muốn tặng quà, chúng tôi đánh giá cao sự đóng góp bằng chuyển khoản để xây dựng tương lai chung.",
+      "Nếu bạn muốn mừng cưới theo cách gọn nhẹ và hiện đại, tụi mình đã chuẩn bị sẵn mã QR để bạn gửi lời chúc và quà mừng online nha 💌",
     description_3:
-      "Thay cho hoa và quà vật chất, chúng tôi cũng vui nếu nhận vé cào hoặc vé số như một cách vui vẻ để chúc mừng.",
+      "Dù là một cái ôm, một lời chúc hay chỉ đơn giản là nghĩ về tụi mình trong ngày đặc biệt này, tụi mình cũng đã thấy đủ đầy và hạnh phúc rồi.",
     description_4:
-      "Khách quốc tế vui lòng cân nhắc gửi quà qua chuyển khoản ngân hàng. Nhấn nút bên dưới và nhập mật khẩu trên thiệp mời.",
+      "Trong trường hợp bạn không thể đến dự, chỉ cần một lần quét QR trên website cũng đủ để tụi mình cảm nhận được tình cảm của bạn. Tụi mình chân thành cảm ơn và rất mong được gặp bạn trong một dịp thật gần 🤍",
     button: "Xem thông tin ngân hàng",
     thanks: "CẢM ƠN!",
     error_from_api: "Có lỗi. Thử lại sau hoặc liên hệ chúng tôi",

@@ -1,6 +1,6 @@
 /**
- * @file RegistrySection.js
- * @description This component handles the Registry section of the wedding website, allowing guests to unlock payment details via a password-protected dialog. It supports copying payment details to the clipboard.
+ * @file GiftSection.js
+ * @description This component handles the Gift section of the wedding website, allowing guests to unlock payment details via a password-protected dialog. It supports copying payment details to the clipboard.
  *              Admin can use a different password that redirect to the admin panel when entered.
  * @author Emanuele Sgroi
  * @date 19 October 2024
@@ -20,7 +20,7 @@ import {
 import { motion } from "framer-motion";
 import translations from "@/utils/translations";
 
-const RegistrySection = ({ language }) => {
+const GiftSection = ({ language }) => {
   // Destructure translation strings
   const {
     title,
@@ -301,4 +301,4 @@ const RegistrySection = ({ language }) => {
   );
 };
 
-export default RegistrySection;
+export default GiftSection;

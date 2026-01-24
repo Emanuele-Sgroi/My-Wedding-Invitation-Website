@@ -5,7 +5,7 @@
  * @date 19 October 2024
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaSearch, FaUserEdit } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { FaSort } from "react-icons/fa6";
@@ -132,6 +132,11 @@ const ViewGuestsList = ({
   const [sortOption, setSortOption] = useState("id"); // default sort is by id
   const [guestsList, setGuestsList] = useState(guests); // pass the guest list into a state
 
+  // Sync guestsList with guests prop
+  useEffect(() => {
+    setGuestsList(guests);
+  }, [guests]);
+
   // function to handle 'Edit Guest'
   const handleEditGuest = (guest) => {
     setSelectedGuest(guest); // Set the selected guest for editing
@@ -168,13 +173,7 @@ const ViewGuestsList = ({
         await updateDoc(guestDocRef, {
           relationshipIds: updatedRelationships,
         });
-
-        // Update the local state for each guest
-        guest.relationshipIds = updatedRelationships;
       }
-
-      setGuestsList([...guestsList]); // Trigger re-render with updated relationships
-      setGuests([...guestsList]); // Update the main guests state
 
       // Delete the guest from Firestore
       await deleteGuest(guestId);
@@ -219,14 +218,6 @@ const ViewGuestsList = ({
           return a.name.localeCompare(b.name);
         case "name-reverse":
           return b.name.localeCompare(a.name);
-        case "karolina":
-          return a.guestSide === "Karolina" && b.guestSide !== "Karolina"
-            ? -1
-            : 1;
-        case "emanuele":
-          return a.guestSide === "Emanuele" && b.guestSide !== "Emanuele"
-            ? -1
-            : 1;
         case "status-yes":
           return a.attending === "Yes" && b.attending !== "Yes" ? -1 : 1;
         case "status-no":
@@ -242,8 +233,8 @@ const ViewGuestsList = ({
 
   return (
     <div className="w-full flex flex-col jusify-start items-start mt-4">
-      {guestsList.length === 0 ? (
-        <p>Fetching...</p>
+      {guests.length === 0 ? (
+        <p>No guests found</p>
       ) : (
         <>
           <div className="w-full flex gap-2 justify-between flex-wrap border-b pb-4 mb-4">
@@ -329,10 +320,6 @@ const ViewGuestsList = ({
                       {guest.attending}
                     </p>
                     <p className="font-sans max-sm:text-sm text-left max-sm:mb-[5px]">
-                      <span className="font-semibold">Side:</span>{" "}
-                      {guest.guestSide}
-                    </p>
-                    <p className="font-sans max-sm:text-sm text-left max-sm:mb-[5px]">
                       <span className="font-semibold">Note:</span>{" "}
                       {guest.note.length === 0 ? "" : guest.note}
                     </p>
@@ -392,9 +379,21 @@ const EditAddGuest = ({
 }) => {
   // States for input fields. If they are empty strings, we are in "add guest" mode
   const [name, setName] = useState(selectedGuest?.name || "");
-  const [guestSide, setGuestSide] = useState(selectedGuest?.guestSide || "");
   const [attending, setAttending] = useState(selectedGuest?.attending || "");
   const [note, setNote] = useState(selectedGuest?.note || "");
+
+  // Reset form when selectedGuest changes
+  useEffect(() => {
+    if (selectedGuest) {
+      setName(selectedGuest.name || "");
+      setAttending(selectedGuest.attending || "");
+      setNote(selectedGuest.note || "");
+    } else {
+      setName("");
+      setAttending("");
+      setNote("");
+    }
+  }, [selectedGuest]);
 
   // Function to handle the submt, with either updating a guest or adding a new one
   const handleSubmit = async (e) => {
@@ -404,18 +403,17 @@ const EditAddGuest = ({
       // Edit mode
       try {
         const guestDocRef = doc(db, "guests", String(selectedGuest.id));
-        await updateDoc(guestDocRef, { name, guestSide, attending, note });
+        await updateDoc(guestDocRef, { name, attending, note });
         setGuests((prevGuests) =>
           prevGuests.map((guest) =>
             guest.id === selectedGuest.id
-              ? { ...guest, name, guestSide, attending, note }
+              ? { ...guest, name, attending, note }
               : guest
           )
         );
         console.log("Guest updated successfully");
         alert("Guest info updated");
         setName("");
-        setGuestSide("");
         setAttending("");
         setNote("");
         setSelectedGuest(null);
@@ -425,15 +423,16 @@ const EditAddGuest = ({
       }
     } else {
       // Add mode
-      // Find the highest existing ID
+      // Find the highest existing ID and add 1 to ensure unique ID
       const highestId = guests.reduce(
         (maxId, guest) => Math.max(maxId, guest.id),
         0
       );
+      const newId = highestId + 1;
+      
       const newGuest = {
-        id: highestId + 1, // Assign the next ID
+        id: newId, // Assign the next unique ID
         name,
-        guestSide,
         attending,
         note,
       };
@@ -441,7 +440,6 @@ const EditAddGuest = ({
       try {
         const guestDocRef = doc(db, "guests", String(newGuest.id));
         await setDoc(guestDocRef, newGuest);
-        setGuests((prev) => [...prev, newGuest]);
         console.log("Guest added successfully");
         alert("New guest added to the list");
         // Add the new guest to the guests state, ensuring no duplicates
@@ -456,7 +454,6 @@ const EditAddGuest = ({
           return prevGuests;
         });
         setName("");
-        setGuestSide("");
         setAttending("");
         setNote("");
       } catch (error) {
@@ -480,21 +477,6 @@ const EditAddGuest = ({
           required
           className="max-w-[500px] border  sm:p-2 w-full focus:outline-none focus:ring-0"
         />
-      </div>
-      <div className="max-sm:w-full sm:min-w-[500px] flex flex-col gap-1">
-        <label>Side *</label>
-        <select
-          value={guestSide}
-          onChange={(e) => setGuestSide(e.target.value)}
-          required
-          className="max-w-[500px] border  sm:p-2 w-full focus:outline-none focus:ring-0"
-        >
-          <option value="" disabled>
-            Select Side
-          </option>
-          <option value="Emanuele">Emanuele</option>
-          <option value="Karolina">Karolina</option>
-        </select>
       </div>
       <div className="max-sm:w-full sm:min-w-[500px] flex flex-col gap-1">
         <label>Attending *</label>
@@ -538,9 +520,15 @@ const ManageRelationships = ({ guests, setGuests }) => {
   const [sortOption, setSortOption] = useState("id"); // default sort is by id
   const [selectedGuest, setSelectedGuest] = useState(null); // If null no guest is selected
   const [relationshipSearch, setRelationshipSearch] = useState(""); // for relationships search input
+  const [localGuests, setLocalGuests] = useState(guests); // Local state for guests
+
+  // Sync localGuests with guests prop
+  useEffect(() => {
+    setLocalGuests(guests);
+  }, [guests]);
 
   // Filter and sort guests based on search term and sort option
-  const filteredGuests = guests
+  const filteredGuests = localGuests
     .filter((guest) =>
       guest.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -552,14 +540,6 @@ const ManageRelationships = ({ guests, setGuests }) => {
           return a.name.localeCompare(b.name);
         case "name-reverse":
           return b.name.localeCompare(a.name);
-        case "karolina":
-          return a.guestSide === "Karolina" && b.guestSide !== "Karolina"
-            ? -1
-            : 1;
-        case "emanuele":
-          return a.guestSide === "Emanuele" && b.guestSide !== "Emanuele"
-            ? -1
-            : 1;
         case "with-relationships":
           return a.relationshipIds?.length > 0 ? -1 : 1;
         case "without-relationships":
@@ -570,7 +550,7 @@ const ManageRelationships = ({ guests, setGuests }) => {
     });
 
   // Filter for relationship modal
-  const filteredRelationshipGuests = guests
+  const filteredRelationshipGuests = localGuests
     .filter(
       (g) =>
         g.id !== selectedGuest?.id &&
@@ -651,11 +631,11 @@ const ManageRelationships = ({ guests, setGuests }) => {
     }
   };
 
-  // function fro handlisng 'Remove Relationship'
+  // function for handling 'Remove Relationship'
   const handleRemoveRelationship = async (guestId, relationshipGuestId) => {
     // Find the guest and the relationship guest from the state
-    const guest = guests.find((g) => g.id === guestId);
-    const relationshipGuest = guests.find((g) => g.id === relationshipGuestId);
+    const guest = localGuests.find((g) => g.id === guestId);
+    const relationshipGuest = localGuests.find((g) => g.id === relationshipGuestId);
 
     if (!guest || !relationshipGuest) {
       console.error("One or both guests not found");
@@ -723,8 +703,8 @@ const ManageRelationships = ({ guests, setGuests }) => {
 
   return (
     <div className="w-full flex flex-col jusify-start items-start mt-4">
-      {guests.length === 0 ? (
-        <p>Fetching...</p>
+      {localGuests.length === 0 ? (
+        <p>No guests found</p>
       ) : (
         <>
           <div className="w-full flex gap-2 justify-between flex-wrap border-b pb-4 mb-4">
@@ -783,15 +763,18 @@ const ManageRelationships = ({ guests, setGuests }) => {
                       {guest.relationshipIds &&
                       guest.relationshipIds.length > 0 ? (
                         guest.relationshipIds.map((relId) => {
-                          const relationshipGuest = guests.find(
+                          const relationshipGuest = localGuests.find(
                             (g) => g.id === relId
                           );
+                          if (!relationshipGuest) {
+                            return null;
+                          }
                           return (
                             <span
                               key={relId}
                               className="font-sans text-sm md:text-lg bg-blue-200 px-2 py-1 rounded-full flex items-center gap-1"
                             >
-                              - {relationshipGuest?.name || relId}
+                              - {relationshipGuest.name}
                               <button
                                 onClick={() =>
                                   handleRemoveRelationship(

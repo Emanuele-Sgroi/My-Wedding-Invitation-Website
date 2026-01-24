@@ -10,13 +10,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   SplashScreen,
-  Navbar,
+  NavbarSection,
   WelcomeSection,
   SaveTheDate,
   ScheduleSection,
   InfoSection,
   RSVPSection,
-  RegistrySection,
+  GiftSection,
   AttendingGuestsSection,
   BackgroundAudio,
 } from "@/components";
@@ -50,7 +50,7 @@ export default function Home() {
       {/* Only render main content after splash is done */}
       {splashDone && (
         <>
-          <Navbar
+          <NavbarSection
             language={language}
             detectedLanguage={language}
             setLanguage={setLanguage}
@@ -61,7 +61,7 @@ export default function Home() {
             <ScheduleSection language={language} />
             <InfoSection language={language} />
             <RSVPSection language={language} />
-            <RegistrySection language={language} />
+            <GiftSection language={language} />
             <AttendingGuestsSection language={language} />
           </div>
         </>

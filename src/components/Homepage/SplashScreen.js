@@ -116,6 +116,12 @@ const SplashScreen = ({ onDone, audioRef }) => {
         try {
           await audioElement.play();
           console.log("[SplashScreen] Audio playing successfully");
+          
+          // Update playing state in BackgroundAudio
+          if (audioRef.current.setPlayingState) {
+            audioRef.current.setPlayingState(true);
+            console.log("[SplashScreen] Updated playing state to true");
+          }
         } catch (err) {
           console.error("[SplashScreen] Audio play error:", err);
           
@@ -128,6 +134,12 @@ const SplashScreen = ({ onDone, audioRef }) => {
               try {
                 await audioElement.play();
                 console.log("[SplashScreen] Audio playing after retry");
+                
+                // Update playing state in BackgroundAudio
+                if (audioRef.current.setPlayingState) {
+                  audioRef.current.setPlayingState(true);
+                  console.log("[SplashScreen] Updated playing state to true");
+                }
               } catch (retryErr) {
                 console.error("[SplashScreen] Audio still not playing:", retryErr);
               }

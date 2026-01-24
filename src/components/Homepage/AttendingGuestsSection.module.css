@@ -1,0 +1,26 @@
+/**
+ * @file AttendingGuestsSection.module.css
+ * @description CSS module for AttendingGuestsSection component with responsive background images
+ * @date 2026-01-24
+ */
+
+.attendingGuestsSection {
+  position: relative;
+  width: 100%;
+  min-height: 120svh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+  background-image: url('/images/welcome_1.jpg');
+}
+
+@media (min-width: 768px) {
+  .attendingGuestsSection {
+    min-height: 100svh;
+    background-image: url('/images/thankyou.png');
+  }
+}

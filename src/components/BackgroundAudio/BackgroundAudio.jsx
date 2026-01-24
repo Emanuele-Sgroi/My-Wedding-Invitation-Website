@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "re
 
 
 
-const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/music.mp3", loop = true, showButton = true }, ref) {
+const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/music.mp3", loop = true, showButton = true, onPlayingChange }, ref) {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
 
@@ -21,6 +21,14 @@ const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/musi
     }
   };
 
+  // Hàm setPlayingState: để cập nhật state playing từ ngoài
+  const setPlayingState = (val) => {
+    setPlaying(val);
+    if (onPlayingChange) {
+      onPlayingChange(val);
+    }
+  };
+
   // Gán ref ngay lập tức khi audioRef thay đổi
   useEffect(() => {
     if (ref && audioRef.current) {
@@ -28,16 +36,18 @@ const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/musi
       ref.current = {
         audioRef,
         setMuted,
+        setPlayingState,
       };
     }
   }, [audioRef.current, ref]);
 
   useImperativeHandle(ref, () => {
     console.log("[BackgroundAudio] useImperativeHandle called");
-    console.log("[BackgroundAudio] Returning:", { audioRef, setMuted });
+    console.log("[BackgroundAudio] Returning:", { audioRef, setMuted, setPlayingState });
     return {
       audioRef,
       setMuted,
+      setPlayingState,
     };
   }, []);
 
@@ -74,6 +84,34 @@ const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/musi
     }
   }, [src]);
 
+  // Theo dõi sự kiện play/pause để cập nhật state
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handlePlay = () => {
+      setPlaying(true);
+      if (onPlayingChange) {
+        onPlayingChange(true);
+      }
+    };
+
+    const handlePause = () => {
+      setPlaying(false);
+      if (onPlayingChange) {
+        onPlayingChange(false);
+      }
+    };
+
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+
+    return () => {
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+    };
+  }, [onPlayingChange]);
+
   return (
     <div className={'fixed bottom-4 left-4 z-[9999]'}>
       <audio
@@ -87,10 +125,15 @@ const BackgroundAudio = forwardRef(function BackgroundAudio({ src = "/audio/musi
       {showButton && (
         <button
           onClick={toggle}
-          className="rounded-full bg-white/80 hover:bg-pink-100 text-pink-600 font-bold shadow-lg px-5 py-2 text-lg transition-all border border-pink-200"
-          style={{ minWidth: 80 }}
+          className="rounded-full bg-white/80 hover:bg-pink-100 text-pink-600 font-bold shadow-lg px-5 py-2 text-lg transition-all border border-pink-200 relative overflow-hidden"
+          style={{ minWidth: 100, minHeight: 44 }}
         >
-          {playing ? "Pause" : "Play"}
+          <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-300" style={{ opacity: playing ? 1 : 0 }}>
+            Pause
+          </span>
+          <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-300" style={{ opacity: playing ? 0 : 1 }}>
+            Play
+          </span>
         </button>
       )}
     </div>
