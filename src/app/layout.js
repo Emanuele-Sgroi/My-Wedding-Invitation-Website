@@ -20,22 +20,29 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Linh Nhi & Như Quỳnh Wedding",
   description:
-    "You are invited to our Wedding | Bạn được mời đến dự đám cưới của chúng tôi. |  Jesteś zaproszony na nasz Ślub",
+    "You are invited to our Wedding | Bạn được mời đến dự đám cưới của chúng tôi.",
   openGraph: {
     title: "Linh Nhi & Như Quỳnh Wedding",
     description:
-      "You are invited to our Wedding | Bạn được mời đến dự đám cưới của chúng tôi. |  Jesteś zaproszony na nasz Ślub",
-    url: "https://emanuelekarolina.vercel.app/",
+      "You are invited to our Wedding | Bạn được mời đến dự đám cưới của chúng tôi.",
+    url: "https://my-wedding-invitation-website.vercel.app/",
     siteName: "Linh Nhi & Như Quỳnh Wedding",
     images: [
       {
-        url: "https://emanuelekarolina.vercel.app/images/og-image.jpg",
+        url: "https://my-wedding-invitation-website.vercel.app/images/og-image.JPG",
         width: 1200,
         height: 600,
         alt: "Linh Nhi & Như Quỳnh Wedding Website",
       },
     ],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Linh Nhi & Như Quỳnh Wedding",
+    description:
+      "You are invited to our Wedding | Bạn được mời đến dự đám cưới của chúng tôi.",
+    images: ["https://my-wedding-invitation-website.vercel.app/images/og-image.JPG"],
   },
 };
 
