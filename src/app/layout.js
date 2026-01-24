@@ -29,7 +29,7 @@ export const metadata = {
     siteName: "Linh Nhi & Như Quỳnh Wedding",
     images: [
       {
-        url: "https://my-wedding-invitation-website.vercel.app/images/og-image.JPG",
+        url: "https://my-wedding-invitation-website.vercel.app/images/og-image.jpg",
         width: 1200,
         height: 600,
         alt: "Linh Nhi & Như Quỳnh Wedding Website",
@@ -42,7 +42,7 @@ export const metadata = {
     title: "Linh Nhi & Như Quỳnh Wedding",
     description:
       "You are invited to our Wedding | Bạn được mời đến dự đám cưới của chúng tôi.",
-    images: ["https://my-wedding-invitation-website.vercel.app/images/og-image.JPG"],
+    images: ["https://my-wedding-invitation-website.vercel.app/images/og-image.jpg"],
   },
 };
 
