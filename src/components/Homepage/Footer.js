@@ -30,7 +30,7 @@ const Footer = ({ language }) => {
             rel="noreferrer"
             className="text-gold font-semibold"
           >
-            @barometro.uk
+            @danhnguyen
           </a>
         </span>{" "}
       </p>

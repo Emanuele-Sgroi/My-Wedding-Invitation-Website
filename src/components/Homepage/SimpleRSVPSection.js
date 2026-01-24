@@ -143,7 +143,7 @@ const SimpleRSVPSection = ({ language }) => {
   return (
     <section
       id="rsvp-section"
-      className="relative flex flex-col w-full bg-cream"
+      className="relative w-full flex flex-col items-center pt-16 lg:pt-20 z-10 bg-cream overflow-hidden"
     >
       {/* Confetti */}
       {showConfetti && (
@@ -211,138 +211,142 @@ const SimpleRSVPSection = ({ language }) => {
         <div className="overlay z-0"></div>
       </div>
 
-      {/* Content */}
-      <div className="w-full py-12 px-4 sm:px-6 xl:px-12 bg-cream flex flex-col lg:flex-row justify-center gap-4 lg:gap-12 xl:gap-44">
-        {/* Left: text */}
-        <div className="w-full lg:w-1/2 flex justify-start lg:justify-end">
-          <div className="flex flex-col items-start relative w-full max-w-full lg:max-w-lg text-left gap-0 lg:gap-6">
-            <div className="flex flex-col items-start max-sm:w-full max-sm:items-center">
-              <h3 translate="no" className="font-bold z-20 ml-6 sm:ml-16">
-                {title.main}
-              </h3>
-              <h3
-                translate="no"
-                className="text-gold text-6xl sm:text-8xl alex-brush z-10 transform font-light -mt-10"
-              >
-                {title.sub}
-              </h3>
-            </div>
-            <p translate="no" className="text-left">
-              {description_1.map((item, index) =>
-                typeof item === "string" ? (
-                  item
-                ) : (
-                  <span key={index} className="font-bold">
-                    {item.text}
-                  </span>
-                )
-              )}
-            </p>
-            <p translate="no" className="text-left">
-              {description_2}
-            </p>
-          </div>
-        </div>
-
-        {/* Right: simple form */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-start items-start">
-          <div className="w-full lg:max-w-[500px] flex flex-col justify-start items-start gap-4">
-            {/* Name */}
-            <div className="w-full flex flex-col items-start">
-              <label
-                translate="no"
-                className="font-semibold mb-1 text-left"
-              >
-                Họ tên / Name *
-              </label>
-              <input
-                type="text"
-                className="border py-2 px-3 rounded w-full max-lg:max-w-[500px] focus:outline-none"
-                value={guestName}
-                onChange={(e) => setGuestName(e.target.value)}
-                translate="no"
-                placeholder="Nhập họ tên của bạn"
-              />
-            </div>
-
-            {/* Attendance */}
-            <div className="w-full flex flex-col items-start">
-              <p translate="no" className="font-semibold mb-1 text-left">
-                {single_guest_2}
-              </p>
-              <Select
-                value={attendance}
-                onValueChange={(value) => setAttendance(value)}
-              >
-                <SelectTrigger className="w-[230px] px-4 rounded-md bg-neutral-100">
-                  <SelectValue
-                    translate="no"
-                    placeholder={answers.unknown}
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Yes" translate="no">
-                    {answers.yes}
-                  </SelectItem>
-                  <SelectItem value="No" translate="no">
-                    {answers.no}
-                  </SelectItem>
-                  <SelectItem value="Unknown" translate="no">
-                    {answers.unknown}
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Note */}
-            <textarea
-              placeholder={note_placeholder}
-              className="border p-2 rounded w-full max-lg:max-w-[500px] sm:my-2 focus:outline-none"
-              value={specialRequests}
-              translate="no"
-              onChange={(e) => setSpecialRequests(e.target.value)}
-            />
-
-            {/* Submit */}
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              translate="no"
-              className="btn2 max-sm:mt-2"
-            >
-              {isLoading ? button.loading : button.submit}
-            </button>
-
-            {/* Error */}
-            {errorMessage && (
-              <p
-                translate="no"
-                className="text-red-500 mt-2 text-left text-lg"
-              >
-                {errorMessage}
-              </p>
-            )}
-
-            {/* Thank you */}
-            {submitted && !errorMessage && (
-              <div className="mt-4 w-full flex flex-col justify-start items-start">
-                <p translate="no" className="text-left">
-                  <span className="font-bold">{rsvp_success.thanks}</span>{" "}
-                  {rsvp_success.submitted}
-                </p>
-                <p translate="no" className="text-left text-lg -mt-4">
-                  {rsvp_success.change_by.map((item, index) =>
-                    typeof item === "string" ? (
-                      item
-                    ) : (
-                      <span key={index} className="font-bold">
-                        {item.text}
-                      </span>
-                    )
-                  )}
-                </p>
+      {/* Main section */}
+      <div className="w-full flex flex-col items-center px-4 z-10">
+        <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-8 md:gap-20 lg:gap-24 mt-12 sm:mt-16 lg:mt-20 px-4 max-w-[1400px]">
+          {/* Left part - Title and Description */}
+          <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-end">
+            <div className="flex flex-col items-center sm:items-end text-center sm:text-right max-w-[500px]">
+              <div className="flex flex-col items-center sm:items-end">
+                <h3 translate="no" className="font-bold z-20">
+                  {title.main}
+                </h3>
+                <h3
+                  translate="no"
+                  className="text-gold text-6xl sm:text-8xl alex-brush z-10 transform font-light -mt-8 md:-mt-10"
+                >
+                  {title.sub}
+                </h3>
               </div>
-            )}
+              <p translate="no" className="text-center sm:text-right">
+                {description_1.map((item, index) =>
+                  typeof item === "string" ? (
+                    item
+                  ) : (
+                    <span key={index} className="font-bold">
+                      {item.text}
+                    </span>
+                  )
+                )}
+              </p>
+              <p translate="no" className="text-center sm:text-right">
+                {description_2}
+              </p>
+            </div>
+          </div>
+
+          {/* Right part - Simple RSVP Form */}
+          <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-start">
+            <div className="w-full max-w-[500px] flex flex-col items-center sm:items-start gap-6">
+              {/* Name */}
+              <div className="w-full flex flex-col items-center sm:items-start">
+                <label
+                  translate="no"
+                  className="font-semibold mb-2 text-center sm:text-left font-cormorant"
+                >
+                  Họ tên / Name *
+                </label>
+                <input
+                  type="text"
+                  className="w-full py-2 px-3 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant text-base"
+                  value={guestName}
+                  onChange={(e) => setGuestName(e.target.value)}
+                  translate="no"
+                  placeholder="Nhập họ tên của bạn"
+                />
+              </div>
+
+              {/* Attendance */}
+              <div className="w-full flex flex-col items-center sm:items-start">
+                <p translate="no" className="font-semibold mb-2 text-center sm:text-left font-cormorant">
+                  {single_guest_2}
+                </p>
+                <Select
+                  value={attendance}
+                  onValueChange={(value) => setAttendance(value)}
+                >
+                  <SelectTrigger className="w-full sm:w-[230px] px-4 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant">
+                    <SelectValue
+                      translate="no"
+                      placeholder={answers.unknown}
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Yes" translate="no">
+                      {answers.yes}
+                    </SelectItem>
+                    <SelectItem value="No" translate="no">
+                      {answers.no}
+                    </SelectItem>
+                    <SelectItem value="Unknown" translate="no">
+                      {answers.unknown}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Note */}
+              <div className="w-full flex flex-col items-center sm:items-start">
+                <textarea
+                  placeholder={note_placeholder}
+                  className="w-full p-3 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant text-base min-h-[100px] resize-y"
+                  value={specialRequests}
+                  translate="no"
+                  onChange={(e) => setSpecialRequests(e.target.value)}
+                />
+              </div>
+
+              {/* Submit */}
+              <button
+                onClick={handleSubmit}
+                disabled={isLoading}
+                translate="no"
+                className="btn2 w-full sm:w-auto mb-4 sm:mb-6"
+              >
+                {isLoading ? button.loading : button.submit}
+              </button>
+
+              {/* Error */}
+              {errorMessage && (
+                <p
+                  translate="no"
+                  className="text-red-500 mt-2 text-center sm:text-left font-cormorant"
+                >
+                  {errorMessage}
+                </p>
+              )}
+
+              {/* Thank you */}
+              {submitted && !errorMessage && (
+                <div className="mt-4 w-full flex flex-col items-center sm:items-start">
+                  <p translate="no" className="text-center sm:text-left font-cormorant">
+                    <span className="font-bold">{rsvp_success.thanks}</span>{" "}
+                    {rsvp_success.submitted}
+                  </p>
+                  <p translate="no" className="text-center sm:text-left font-cormorant mt-2">
+                    {rsvp_success.change_by.map((item, index) =>
+                      typeof item === "string" ? (
+                        item
+                      ) : (
+                        <span key={index} className="font-bold">
+                          {item.text}
+                        </span>
+                      )
+                    )}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -73,44 +73,44 @@ const GuestManagement = ({ guests, setGuests }) => {
 
   return (
     <div className="w-full flex flex-col jusify-start items-start">
-      <h4 className="font-sans text-neutral-600 font-bold mb-4 text-left">
-        Guest Management
+      <h4 className="text-2xl font-bold mb-6 text-left text-[#d72660]">
+        Quản lý khách mời
       </h4>
 
       <div className=" w-full flex justify-start flex-wrap gap-2 md:gap-4">
         {/* Buttons to switch between sub tabs */}
         <button
           onClick={() => setActiveSubTab("view-guests-list")}
-          className={`h-6 p-2 max-sm:text-sm flex justify-center items-center rounded font-semibold 
+          className={`h-8 p-3 max-sm:text-sm flex justify-center items-center rounded-lg font-semibold transition duration-300
       ${
         activeSubTab === "view-guests-list"
-          ? "bg-slate-700 text-white"
-          : "bg-transparent border border-slate-700 text-black"
+          ? "bg-[#d72660] text-[#fffdfc]"
+          : "bg-transparent border-2 border-[#dcb46d] text-[#d72660] hover:bg-[#dcb46d] hover:text-[#fffdfc]"
       }`}
         >
-          View Guests List
+          Danh sách khách
         </button>
         <button
           onClick={() => setActiveSubTab("edit-add-guest")}
-          className={`h-6 p-2 max-sm:text-sm flex justify-center items-center rounded font-semibold 
+          className={`h-8 p-3 max-sm:text-sm flex justify-center items-center rounded-lg font-semibold transition duration-300
       ${
         activeSubTab === "edit-add-guest"
-          ? "bg-slate-700 text-white"
-          : "bg-transparent border border-slate-700 text-black"
+          ? "bg-[#d72660] text-[#fffdfc]"
+          : "bg-transparent border-2 border-[#dcb46d] text-[#d72660] hover:bg-[#dcb46d] hover:text-[#fffdfc]"
       }`}
         >
-          Edit/Add Guest
+          Thêm/Sửa khách
         </button>
         <button
           onClick={() => setActiveSubTab("manage-relationships")}
-          className={`h-6 p-2 max-sm:text-sm flex justify-center items-center rounded font-semibold 
+          className={`h-8 p-3 max-sm:text-sm flex justify-center items-center rounded-lg font-semibold transition duration-300
       ${
         activeSubTab === "manage-relationships"
-          ? "bg-slate-700 text-white"
-          : "bg-transparent border border-slate-700 text-black"
+          ? "bg-[#d72660] text-[#fffdfc]"
+          : "bg-transparent border-2 border-[#dcb46d] text-[#d72660] hover:bg-[#dcb46d] hover:text-[#fffdfc]"
       }`}
         >
-          Manage Relationships
+          Quản lý quan hệ
         </button>
       </div>
       {/* Render sub tabs */}

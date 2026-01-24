@@ -307,7 +307,7 @@ const RSVPSection = ({ language }) => {
   return (
     <section
       id="rsvp-section"
-      className="relative flex flex-col w-full bg-cream"
+      className="relative w-full flex flex-col items-center pt-16 lg:pt-20 z-10 bg-cream overflow-hidden"
     >
       {/* Confetti effect */}
       {showConfetti && (
@@ -382,207 +382,150 @@ const RSVPSection = ({ language }) => {
         <div className="overlay z-0"></div>
       </div>
 
-      {/* main section */}
-      <div className="w-full py-12 px-4 sm:px-6 xl:px-12 bg-cream flex flex-col lg:flex-row justify-center gap-4 lg:gap-12 xl:gap-44">
-        {/* left part*/}
-        <div className="w-full lg:w-1/2 flex justify-start lg:justify-end">
-          <div className="flex flex-col items-start relative w-full max-w-full lg:max-w-lg text-left gap-0 lg:gap-6">
-            <div className="flex flex-col items-start max-sm:w-full max-sm:items-center">
-              <h3 translate="no" className=" font-bold z-20 ml-6 sm:ml-16">
-                {title.main}
-              </h3>
-              <h3
-                translate="no"
-                className="text-gold text-6xl sm:text-8xl alex-brush z-10 transform font-light -mt-10"
-              >
-                {title.sub}
-              </h3>
-            </div>
-            <p translate="no" className="text-left">
-              {description_1.map((item, index) =>
-                typeof item === "string" ? (
-                  item
-                ) : (
-                  <span key={index} className="font-bold">
-                    {item.text}
-                  </span>
-                )
-              )}
-            </p>
-            <p translate="no" className="text-left">
-              {description_2}
-            </p>
-          </div>
-        </div>
-        {/* right part*/}
-        <div className="w-full lg:w-1/2 flex flex-col justify-start items-start">
-          <div className="w-full lg:max-w-[500px] flex flex-col justify-start items-start">
-            <p translate="no">- {label}</p>
-            {/* Search Input */}
-            <input
-              type="text"
-              placeholder={placeholder}
-              className="border py-2 px-3 rounded w-full max-lg:max-w-[500px] mb-4 focus:outline-none"
-              value={searchTerm}
-              onChange={handleSearch}
-              autoComplete="on"
-              translate="no"
-            />
-
-            {/* Display search results */}
-            {searchTerm && filteredGuests.length > 0 && (
-              <ul className="border p-2 w-full max-lg:max-w-[500px] rounded">
-                {filteredGuests.map((guest) => (
-                  <li
-                    key={guest.id}
-                    translate="no"
-                    className="cursor-pointer hover:bg-gray-200 p-2 flex justify-start items-center gap-4"
-                    onClick={() => handleGuestSelect(guest)}
-                  >
-                    {guest.name}
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {/* If no guests are found */}
-            {searchTerm && filteredGuests.length === 0 && (
-              <p translate="no">{no_found}</p>
-            )}
-
-            {/* RSVP Form: Only visible after a guest is selected */}
-            {selectedGuest && (
-              <div className="mt-4 w-full flex flex-col justify-start items-start">
-                {selectedGuest.relationshipIds.length === 0 ? (
-                  <p translate="no" className="text-xl mb-6 text-left">
-                    {single_guest_1.hi}
-                    <span className="font-bold">{selectedGuest.name}!</span>
-                    {single_guest_1.are_invited}
-                  </p>
-                ) : (
-                  <p translate="no" className="text-xl mb-6 text-left">
-                    {multiple_guests_1.hi}{" "}
-                    <span className="font-bold">{selectedGuest.name}!</span>
-                    {multiple_guests_1.you}
-                    {formatNames(
-                      guestsList
-                        .filter((g) =>
-                          selectedGuest.relationshipIds.includes(g.id)
-                        )
-                        .map((g) => g.name)
-                    )}
-                    {multiple_guests_1.are_invited}
-                  </p>
+      {/* Main section */}
+      <div className="w-full flex flex-col items-center px-4 z-10">
+        <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-8 md:gap-20 lg:gap-24 mt-12 sm:mt-16 lg:mt-20 px-4 max-w-[1400px]">
+          {/* Left part - Title and Description */}
+          <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-end">
+            <div className="flex flex-col items-center sm:items-end text-center sm:text-right max-w-[500px]">
+              <div className="flex flex-col items-center sm:items-end">
+                <h3 translate="no" className="font-bold z-20">
+                  {title.main}
+                </h3>
+                <h3
+                  translate="no"
+                  className="text-gold text-6xl sm:text-8xl alex-brush z-10 transform font-light -mt-8 md:-mt-10"
+                >
+                  {title.sub}
+                </h3>
+              </div>
+              <p translate="no" className="text-center sm:text-right">
+                {description_1.map((item, index) =>
+                  typeof item === "string" ? (
+                    item
+                  ) : (
+                    <span key={index} className="font-bold">
+                      {item.text}
+                    </span>
+                  )
                 )}
+              </p>
+              <p translate="no" className="text-center sm:text-right">
+                {description_2}
+              </p>
+            </div>
+          </div>
 
-                {/* Main Guest */}
-                <div className=" flex flex-col items-start">
-                  {selectedGuest.relationshipIds.length === 0 ? (
-                    <p
+          {/* Right part - RSVP Form */}
+          <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-start">
+            <div className="w-full max-w-[500px] flex flex-col items-center sm:items-start">
+              <p translate="no" className="text-center sm:text-left">- {label}</p>
+              
+              {/* Search Input */}
+              <div className="w-full relative">
+                <input
+                  type="text"
+                  placeholder={placeholder}
+                  className="w-full py-2 px-3 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant text-base"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  autoComplete="on"
+                  translate="no"
+                />
+              </div>
+
+              {/* Display search results */}
+              {searchTerm && filteredGuests.length > 0 && (
+                <ul className="w-full bg-white/90 backdrop-blur-sm rounded-lg mt-2 py-2 px-3 border border-gold/30 shadow-md max-h-[300px] overflow-y-auto">
+                  {filteredGuests.map((guest) => (
+                    <li
+                      key={guest.id}
                       translate="no"
-                      className="font-semibold text-lg text-left"
+                      className="cursor-pointer hover:bg-gold/20 p-3 rounded-md transition-all duration-200 font-cormorant text-base flex justify-start items-center gap-4 border-b border-gold/10 last:border-none"
+                      onClick={() => handleGuestSelect(guest)}
                     >
-                      {single_guest_2}
+                      {guest.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* If no guests are found */}
+              {searchTerm && filteredGuests.length === 0 && (
+                <p translate="no" className="text-center sm:text-left mt-2 text-gray-600">{no_found}</p>
+              )}
+
+              {/* RSVP Form: Only visible after a guest is selected */}
+              {selectedGuest && (
+                <div className="mt-6 w-full flex flex-col items-center sm:items-start">
+                  {selectedGuest.relationshipIds.length === 0 ? (
+                    <p translate="no" className="text-xl mb-6 text-center sm:text-left font-cormorant">
+                      {single_guest_1.hi}
+                      <span className="font-bold">{selectedGuest.name}!</span>
+                      {single_guest_1.are_invited}
                     </p>
                   ) : (
-                    <p
-                      translate="no"
-                      className="font-semibold text-lg text-left"
-                    >
-                      {multiple_guests_2}
+                    <p translate="no" className="text-xl mb-6 text-center sm:text-left font-cormorant">
+                      {multiple_guests_1.hi}{" "}
+                      <span className="font-bold">{selectedGuest.name}!</span>
+                      {multiple_guests_1.you}
+                      {formatNames(
+                        guestsList
+                          .filter((g) =>
+                            selectedGuest.relationshipIds.includes(g.id)
+                          )
+                          .map((g) => g.name)
+                      )}
+                      {multiple_guests_1.are_invited}
                     </p>
                   )}
 
-                  <div className="w-full flex justify-between  flex-col sm:flex-row items-start sm:items-center gap-0 sm:gap-4  max-sm:mb-6 pr-6">
-                    <h2
-                      translate="no"
-                      className="text-xl font-bold text-left sm:mt-3"
-                    >
-                      {selectedGuest.name}
-                    </h2>
-                    <Select
-                      // value={guestsToRsvp[0]?.attending}
-                      onValueChange={(value) => {
-                        // Update the attending value for the main guest in guestsToRsvp
-                        setGuestsToRsvp((prevGuests) => {
-                          const updatedGuests = [...prevGuests];
-                          updatedGuests[0] = {
-                            ...updatedGuests[0],
-                            attending: value,
-                          };
-                          return updatedGuests;
-                        });
-                      }}
-                    >
-                      <SelectTrigger className="w-[215px] px-4 rounded-md bg-neutral-100">
-                        <SelectValue
-                          className="p-0"
-                          translate="no"
-                          placeholder={
-                            guestsToRsvp[0]?.attending === "Unknown" ||
-                            guestsToRsvp[0]?.attending === "unknown"
-                              ? answers.unknown
-                              : guestsToRsvp[0]?.attending === "Yes"
-                              ? answers.yes
-                              : answers.no
-                          }
-                        />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Yes" translate="no">
-                          {answers.yes}
-                        </SelectItem>
-                        <SelectItem value="No" translate="no">
-                          {answers.no}
-                        </SelectItem>
-                        <SelectItem value="Unknown" translate="no">
-                          {answers.unknown}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  {/* Relatives or Group Members */}
-                  {guestsToRsvp.slice(1).map((guest) => (
-                    <div
-                      key={guest.id}
-                      className="w-full flex justify-between  flex-col sm:flex-row items-start sm:items-center gap-0 sm:gap-4  max-sm:mb-6 pr-6"
-                    >
+                  {/* Main Guest */}
+                  <div className="flex flex-col items-center sm:items-start w-full">
+                    {selectedGuest.relationshipIds.length === 0 ? (
+                      <p
+                        translate="no"
+                        className="font-semibold text-lg text-center sm:text-left font-cormorant"
+                      >
+                        {single_guest_2}
+                      </p>
+                    ) : (
+                      <p
+                        translate="no"
+                        className="font-semibold text-lg text-center sm:text-left font-cormorant"
+                      >
+                        {multiple_guests_2}
+                      </p>
+                    )}
+
+                    <div className="w-full flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 sm:gap-6 mt-4 mb-6">
                       <h2
                         translate="no"
-                        className="text-xl font-bold text-left sm:mt-3"
+                        className="text-xl font-bold text-center sm:text-left font-cormorant"
                       >
-                        {guest.name}
+                        {selectedGuest.name}
                       </h2>
                       <Select
-                        // value={guest.attending}
                         onValueChange={(value) => {
-                          // Update the attending value for this guest
-                          setGuestsToRsvp((prevGuests) =>
-                            prevGuests.map((g) =>
-                              g.id === guest.id ? { ...g, attending: value } : g
-                            )
-                          );
+                          setGuestsToRsvp((prevGuests) => {
+                            const updatedGuests = [...prevGuests];
+                            updatedGuests[0] = {
+                              ...updatedGuests[0],
+                              attending: value,
+                            };
+                            return updatedGuests;
+                          });
                         }}
                       >
-                        <SelectTrigger
-                          value={
-                            guest.attending === "Unknown" ||
-                            guest.attending === "unknown"
-                              ? answers.unknown
-                              : guest.attending === "Yes"
-                              ? answers.yes
-                              : answers.no
-                          }
-                          className="w-[215px] px-4 rounded-md bg-neutral-100"
-                        >
+                        <SelectTrigger className="w-full sm:w-[215px] px-4 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant">
                           <SelectValue
                             className="p-0"
                             translate="no"
                             placeholder={
-                              guest.attending === "Unknown" ||
-                              guest.attending === "unknown"
+                              guestsToRsvp[0]?.attending === "Unknown" ||
+                              guestsToRsvp[0]?.attending === "unknown"
                                 ? answers.unknown
-                                : guest.attending === "Yes"
+                                : guestsToRsvp[0]?.attending === "Yes"
                                 ? answers.yes
                                 : answers.no
                             }
@@ -601,59 +544,120 @@ const RSVPSection = ({ language }) => {
                         </SelectContent>
                       </Select>
                     </div>
-                  ))}
-                </div>
-
-                {/* Textarea for special requests */}
-                <textarea
-                  placeholder={note_placeholder}
-                  className="border p-2 rounded w-full max-lg:max-w-[500px] sm:my-4 focus:outline-none"
-                  value={specialRequests}
-                  translate="no"
-                  onChange={(e) => setSpecialRequests(e.target.value)}
-                />
-
-                {/* Submit Button */}
-                <button
-                  onClick={handleSubmit}
-                  disabled={isLoading}
-                  translate="no"
-                  className="btn2 max-sm:mt-4"
-                >
-                  {isLoading ? button.loading : button.submit}
-                </button>
-                {/* Error Message */}
-                {errorMessage && (
-                  <p
-                    translate="no"
-                    className="text-red-500 mt-4 text-left text-lg"
-                  >
-                    {errorMessage}
-                  </p>
-                )}
-
-                {/* Thank You Message */}
-                {submitted && errorMessage.length === 0 && (
-                  <div className="mt-4 w-full flex flex-col justify-start items-start">
-                    <p translate="no" className="text-left">
-                      <span className="font-bold">{rsvp_success.thanks}</span>{" "}
-                      {rsvp_success.submitted}
-                    </p>
-                    <p translate="no" className="text-left text-lg -mt-4">
-                      {rsvp_success.change_by.map((item, index) =>
-                        typeof item === "string" ? (
-                          item
-                        ) : (
-                          <span key={index} className="font-bold">
-                            {item.text}
-                          </span>
-                        )
-                      )}
-                    </p>
+                    
+                    {/* Relatives or Group Members */}
+                    {guestsToRsvp.slice(1).map((guest) => (
+                      <div
+                        key={guest.id}
+                        className="w-full flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 sm:gap-6 mt-4 mb-6"
+                      >
+                        <h2
+                          translate="no"
+                          className="text-xl font-bold text-center sm:text-left font-cormorant"
+                        >
+                          {guest.name}
+                        </h2>
+                        <Select
+                          onValueChange={(value) => {
+                            setGuestsToRsvp((prevGuests) =>
+                              prevGuests.map((g) =>
+                                g.id === guest.id ? { ...g, attending: value } : g
+                              )
+                            );
+                          }}
+                        >
+                          <SelectTrigger
+                            value={
+                              guest.attending === "Unknown" ||
+                              guest.attending === "unknown"
+                                ? answers.unknown
+                                : guest.attending === "Yes"
+                                ? answers.yes
+                                : answers.no
+                            }
+                            className="w-full sm:w-[215px] px-4 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant"
+                          >
+                            <SelectValue
+                              className="p-0"
+                              translate="no"
+                              placeholder={
+                                guest.attending === "Unknown" ||
+                                guest.attending === "unknown"
+                                  ? answers.unknown
+                                  : guest.attending === "Yes"
+                                  ? answers.yes
+                                  : answers.no
+                              }
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Yes" translate="no">
+                              {answers.yes}
+                            </SelectItem>
+                            <SelectItem value="No" translate="no">
+                              {answers.no}
+                            </SelectItem>
+                            <SelectItem value="Unknown" translate="no">
+                              {answers.unknown}
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    ))}
                   </div>
-                )}
-              </div>
-            )}
+
+                  {/* Textarea for special requests */}
+                  <textarea
+                    placeholder={note_placeholder}
+                    className="w-full p-3 rounded-md bg-white/90 backdrop-blur-sm border border-gold/30 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all duration-300 font-cormorant text-base min-h-[100px] resize-y"
+                    value={specialRequests}
+                    translate="no"
+                    onChange={(e) => setSpecialRequests(e.target.value)}
+                  />
+
+                  {/* Submit Button */}
+                  <button
+                    onClick={handleSubmit}
+                    disabled={isLoading}
+                    translate="no"
+                    className="btn2 mt-6 w-full sm:w-auto"
+                  >
+                    {isLoading ? button.loading : button.submit}
+                  </button>
+                  
+                  {/* Error Message */}
+                  {errorMessage && (
+                    <p
+                      translate="no"
+                      className="text-red-500 mt-4 text-center sm:text-left font-cormorant"
+                    >
+                      {errorMessage}
+                    </p>
+                  )}
+
+                  {/* Thank You Message */}
+                  {submitted && errorMessage.length === 0 && (
+                    <div className="mt-6 w-full flex flex-col items-center sm:items-start">
+                      <p translate="no" className="text-center sm:text-left font-cormorant">
+                        <span className="font-bold">{rsvp_success.thanks}</span>{" "}
+                        {rsvp_success.submitted}
+                      </p>
+                      <p translate="no" className="text-center sm:text-left font-cormorant mt-2">
+                        {rsvp_success.change_by.map((item, index) =>
+                          typeof item === "string" ? (
+                            item
+                          ) : (
+                            <span key={index} className="font-bold">
+                              {item.text}
+                            </span>
+                          )
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

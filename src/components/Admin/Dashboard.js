@@ -53,82 +53,78 @@ const Dashboard = ({ guests }) => {
   ).length;
 
   return (
-    <div className="w-full flex flex-col jusify-start items-start ">
-      <h4 className="font-sans text-neutral-600 font-bold mb-4 text-left">
+    <div className="w-full flex flex-col jusify-start items-start">
+      <h4 className="text-2xl font-bold mb-6 text-left text-[#d72660]">
         Dashboard
       </h4>
 
       {guests.length === 0 ? (
-        <p className="font-sans">Counting...</p>
+        <p className="text-lg text-[#d72660]">Đang tải dữ liệu...</p>
       ) : (
         <>
           {/* Section 1: Total number of guests */}
-          <div className="mb-6 flex flex-col items-start border-b">
-            <h6 className="font-sans font-bold text-left">
-              Total Guests Invited
+          <div className="mb-6 flex flex-col items-start border-b-2 border-[#dcb46d] pb-4 w-full">
+            <h6 className="text-xl font-bold text-left text-[#d72660] mb-2">
+              Tổng số khách mời
             </h6>
-            <p className="font-sans text-left">
-              Total guests: <span className="font-bold">{totalGuests}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Tổng khách: <span className="font-bold">{totalGuests}</span>
             </p>
-            <p className="font-sans text-left">
-              Emanuele&apos;s side:{" "}
+            <p className="text-lg text-left text-[#d72660]">
+              Bên Emanuele:{" "}
               <span className="font-bold">{emanueleSideGuests.length}</span>
             </p>
-            <p className="font-sans text-left">
-              Karolina&apos;s side:{" "}
+            <p className="text-lg text-left text-[#d72660]">
+              Bên Karolina:{" "}
               <span className="font-bold">{karolinaSideGuests.length}</span>
             </p>
           </div>
 
           {/* Section 2: Total guests by attending status */}
-          <div className="mb-6 flex flex-col items-start border-b">
-            <h6 className="font-sans font-bold text-left">
-              Guests Attending Status {"("}All{")"}
+          <div className="mb-6 flex flex-col items-start border-b-2 border-[#dcb46d] pb-4 w-full">
+            <h6 className="text-xl font-bold text-left text-[#d72660] mb-2">
+              Trạng thái tham dự (Tất cả)
             </h6>
-            <p className="font-sans text-left">
-              Coming: <span className="font-bold">{attendingYes}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Đến: <span className="font-bold">{attendingYes}</span>
             </p>
-            <p className="font-sans text-left">
-              Not coming: <span className="font-bold">{attendingNo}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Không đến: <span className="font-bold">{attendingNo}</span>
             </p>
-            <p className="font-sans text-left">
-              Unsure: <span className="font-bold">{attendingUnknown}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Chưa xác định: <span className="font-bold">{attendingUnknown}</span>
             </p>
           </div>
 
           {/* Section 3: Guests attending status from his side */}
-          <div className="mb-6 flex flex-col items-start border-b">
-            <h6 className="font-sans font-bold text-left">
-              Guests Attending Status {"("}Emanuele&apos;s Side{")"}
+          <div className="mb-6 flex flex-col items-start border-b-2 border-[#dcb46d] pb-4 w-full">
+            <h6 className="text-xl font-bold text-left text-[#d72660] mb-2">
+              Trạng thái tham dự (Bên Emanuele)
             </h6>
-            <p className="font-sans text-left">
-              Coming: <span className="font-bold">{emanueleAttendingYes}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Đến: <span className="font-bold">{emanueleAttendingYes}</span>
             </p>
-            <p className="font-sans text-left">
-              Not coming:{" "}
-              <span className="font-bold">{emanueleAttendingNo}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Không đến: <span className="font-bold">{emanueleAttendingNo}</span>
             </p>
-            <p className="font-sans text-left">
-              Unsure:{" "}
-              <span className="font-bold">{emanueleAttendingUnknown}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Chưa xác định: <span className="font-bold">{emanueleAttendingUnknown}</span>
             </p>
           </div>
 
           {/* Section 4: Guests attending status from her side */}
-          <div className="mb-6 flex flex-col items-start ">
-            <h6 className="font-sans font-bold text-left">
-              Guests Attending Status {"("}Karolina&apos;s Side{")"}
+          <div className="mb-6 flex flex-col items-start w-full">
+            <h6 className="text-xl font-bold text-left text-[#d72660] mb-2">
+              Trạng thái tham dự (Bên Karolina)
             </h6>
-            <p className="font-sans text-left">
-              Coming: <span className="font-bold">{karolinaAttendingYes}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Đến: <span className="font-bold">{karolinaAttendingYes}</span>
             </p>
-            <p className="font-sans text-left">
-              Not coming:{" "}
-              <span className="font-bold">{karolinaAttendingNo}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Không đến: <span className="font-bold">{karolinaAttendingNo}</span>
             </p>
-            <p className="font-sans text-left">
-              Unsure:{" "}
-              <span className="font-bold">{karolinaAttendingUnknown}</span>
+            <p className="text-lg text-left text-[#d72660]">
+              Chưa xác định: <span className="font-bold">{karolinaAttendingUnknown}</span>
             </p>
           </div>
         </>

@@ -96,7 +96,7 @@ const InfoSection = ({ language }) => {
           </p>
 
           <Link
-            href={`https://przypatykach.pl/`}
+            href={`https://maps.app.goo.gl/z6dFpME6KGSPXmUm6`}
             target="_blank"
             className="flex justify-center items-center gap-1 border border-gold rounded-lg px-2 py-1 mt-2 font-light text-sm"
           >

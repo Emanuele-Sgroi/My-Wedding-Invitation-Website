@@ -58,8 +58,8 @@ const SaveTheDate = ({ language }) => {
 
   // Group story elements for convenience
   const story = [
-    { year: 2018, text: story_1, img: "/icons/met.svg" },
-    { year: 2022, text: story_2, img: "/icons/engaged.svg" },
+    { year: 2025, text: story_1, img: "/icons/met.svg" },
+    { year: 2025, text: story_2, img: "/icons/engaged.svg" },
     {
       year: 2025,
       text: countdown.message ? story_3_past : story_3_future,
@@ -72,6 +72,9 @@ const SaveTheDate = ({ language }) => {
       id="savethedate-section"
       className="relative w-full flex flex-col items-center pt-16 lg:pt-20 z-10 bg-cream overflow-hidden"
     >
+      {/* Background overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cream/50 to-cream z-0" />
+      
       <div className="w-full flex flex-col items-center px-4 z-10">
         <motion.div
           initial="hidden"
@@ -85,7 +88,7 @@ const SaveTheDate = ({ language }) => {
             width={95}
             height={95}
             quality={100}
-            className="mb-4 "
+            className="mb-4"
           />
         </motion.div>
 
@@ -96,7 +99,7 @@ const SaveTheDate = ({ language }) => {
           viewport={{ once: true, amount: 0.2 }}
           className="flex flex-col justify-center items-center"
         >
-          <h3 translate="no" className=" font-bold z-20 ">
+          <h3 translate="no" className="font-bold z-20">
             {title}
           </h3>
           <h3
@@ -114,7 +117,7 @@ const SaveTheDate = ({ language }) => {
           variants={primaryVariants}
           viewport={{ once: true, amount: 0.2 }}
           translate="no"
-          className="sloop-script tracking-wider text-black mt-4"
+          className="sloop-script tracking-wider text-black mt-4 text-3xl sm:text-4xl md:text-5xl"
         >
           {date}
         </motion.h1>
@@ -124,56 +127,42 @@ const SaveTheDate = ({ language }) => {
           variants={secondaryVariants}
           viewport={{ once: true, amount: 0.2 }}
           translate="no"
+          className="text-gray-700"
         >
           {place}
         </motion.p>
       </div>
 
-      <div className="w-full flex flex-col sm:flex-row  justify-center items-center gap-8 md:gap-20 lg:gap-24 mt-12 sm:mt-16 lg:mt-20 px-4 z-10">
+      <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-8 md:gap-16 lg:gap-20 mt-12 sm:mt-16 lg:mt-20 px-4 z-10">
         {story.map((item, index) => (
           <div
             key={`${item.year} ${index}`}
-            className="flex flex-col justify-center items-center z-10"
+            className="flex flex-col justify-center items-center z-10 group cursor-pointer"
           >
-            <motion.h4
-              initial="hidden"
-              whileInView="visible"
-              variants={quartaryVariants}
-              viewport={{ once: true, amount: 0.2 }}
-              translate="no"
-              className="max-sm:hidden"
-            >
-              {item.year}
-            </motion.h4>
             <motion.div
               initial="hidden"
               whileInView="visible"
               variants={secondaryVariants}
               viewport={{ once: true, amount: 0.2 }}
-              className="w-[140px] sm:w-[160px] h-[140px] sm:h-[160px] flex justify-center items-center mb-3"
+              className="relative w-[140px] sm:w-[160px] h-[140px] sm:h-[160px] flex justify-center items-center mb-3 transition-transform duration-300 group-hover:scale-110"
             >
+              {/* Outer decorative circle */}
+              <div className="absolute inset-0 rounded-full border-2 border-gold/30 group-hover:border-gold/60 transition-all duration-300" />
+              {/* Inner decorative circle */}
+              <div className="absolute inset-4 rounded-full border border-gold/20 group-hover:border-gold/40 transition-all duration-300" />
               <img
                 src={item.img}
                 alt={item.text}
-                className="w-full h-auto z-10"
+                className="w-full h-auto z-10 relative"
               />
             </motion.div>
-            <motion.h4
-              initial="hidden"
-              whileInView="visible"
-              variants={quartaryVariants}
-              viewport={{ once: true, amount: 0.2 }}
-              translate="no"
-              className="sm:hidden mb-0"
-            >
-              {item.year}
-            </motion.h4>
             <motion.p
               initial="hidden"
               whileInView="visible"
               variants={quartaryVariants}
               viewport={{ once: true, amount: 0.2 }}
               translate="no"
+              className="text-center text-gray-800 font-medium group-hover:text-gold transition-colors duration-300"
             >
               {item.text}
             </motion.p>
@@ -188,7 +177,7 @@ const SaveTheDate = ({ language }) => {
         width={650}
         height={0}
         quality={100}
-        className={`max-md:hidden absolute max-md:w-[300px] max-lg:w-[220px] max-xl:w-[350px] max-2xl:w-[450px] max-md:bottom-[900px] md:top-72 right-0 md:right-16 z-0 opacity-10`}
+        className={`max-md:hidden absolute max-md:w-[300px] max-lg:w-[220px] max-xl:w-[350px] max-2xl:w-[450px] max-md:bottom-[900px] md:top-72 right-0 md:right-16 z-0 opacity-10 transition-opacity duration-500 hover:opacity-20`}
       />
       <Image
         src={images.la1}
@@ -196,7 +185,7 @@ const SaveTheDate = ({ language }) => {
         width={650}
         height={0}
         quality={100}
-        className={`max-md:hidden absolute max-lg:w-[250px] max-xl:w-[350px] top-72 left-16 z-0 opacity-10 transform scale-x-[-1]`}
+        className={`max-md:hidden absolute max-lg:w-[250px] max-xl:w-[350px] top-72 left-16 z-0 opacity-10 transform scale-x-[-1] transition-opacity duration-500 hover:opacity-20`}
       />
     </section>
   );

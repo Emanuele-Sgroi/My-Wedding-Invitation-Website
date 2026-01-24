@@ -1,8 +1,8 @@
 /**
  * @file translation.js
  * @description Contains translations for the website in English and Vietnamese, covering various sections such as navbar, RSVP, registry, and more.
- * @author Emanuele Sgroi
- * @date 19 October 2024
+ * @author Linh Nhi & Như Quỳnh
+ * @date 24 January 2026
  */
 
 const translations = {};
@@ -10,10 +10,10 @@ const translations = {};
 // English translations
 translations.en = {
   couple: {
-    her: "N.Quỳnh",
-    him: "L.Nhi",
-    footer_her: "N.Quỳnh",
-    footer_him: "L.Nhi",
+    her: "Như Quỳnh",
+    him: "Linh Nhi",
+    footer_her: "Như Quỳnh",
+    footer_him: "Linh Nhi",
   },
   navbar: {
     welcome: "Welcome",
@@ -39,7 +39,7 @@ translations.en = {
   saveTheDate_section: {
     title: "SAVE",
     title_cursive: "The Date",
-    date: "5th February 2026",
+    date: "5,6 February 2026",
     place: "Hậu Mỹ Phú, Cái Bè, Tiền Giang",
     story_1: "We met",
     story_2: "We got engaged",
@@ -58,7 +58,6 @@ translations.en = {
         dance: { time: "20:00", title: "Entertainment & music" },
         photo: { time: "21:00 - 22:00", title: "Photo session" },
         pig: { time: "22:00", title: "Special dishes served" },
-        cake_cutting: { time: "", title: "" },
         games: { time: "22:30", title: "Traditional games & activities" },
         party: { time: "23:00 - Late", title: "Party continues" },
       },
@@ -67,8 +66,8 @@ translations.en = {
       title: "Day 2 - Wedding Day",
       events: {
         after: { time: "08:00", title: "Groom's family arrives at bride's house" },
-        vespa: { time: "10:00", title: "Cake cutting ceremony" },
-        party_continues: { time: "18:00", title: "Main wedding ceremony begins" },
+        cake_cutting: { time: "10:00", title: "Cake cutting ceremony" },
+        party_continues: { time: "10:10", title: "Main wedding ceremony begins" },
         end: { time: "12:00", title: "Wedding concludes" },
       },
     },
@@ -183,10 +182,10 @@ translations.en = {
 // Vietnamese translations
 translations.vi = {
   couple: {
-    her: "N.Quỳnh",
-    him: "L.Nhi",
-    footer_her: "N.Quỳnh",
-    footer_him: "L.Nhi",
+    her: "Như Quỳnh",
+    him: "Linh Nhi",
+    footer_her: "Như Quỳnh",
+    footer_him: "Linh Nhi",
   },
   navbar: {
     welcome: "Chào mừng",
@@ -212,7 +211,7 @@ translations.vi = {
   saveTheDate_section: {
     title: "LƯU",
     title_cursive: "Ngày",
-    date: "5 tháng 2 năm 2026",
+    date: "5,6 tháng 2 năm 2026",
     place: "Hậu Mỹ Phú, Cái Bè, Tiền Giang",
     story_1: "Chúng tôi gặp nhau",
     story_2: "Chúng tôi đính hôn",
@@ -240,8 +239,8 @@ translations.vi = {
       title: "Ngày 2 - Ngày Cưới",
       events: {
         after: { time: "08:00", title: "Nhà trai đến nhà cô dâu" },
-        vespa: { time: "10:00", title: "Nghi thức cắt bánh" },
-        party_continues: { time: "18:00", title: "Bắt đầu lễ cưới chính thức" },
+        cake_cutting: { time: "10:00", title: "Nghi thức cắt bánh" },
+        party_continues: { time: "10:10", title: "Bắt đầu lễ cưới chính thức" },
         end: { time: "12:00", title: "Kết thúc đám cưới" },
       },
     },

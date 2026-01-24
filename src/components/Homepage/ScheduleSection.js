@@ -80,8 +80,8 @@ const ScheduleSection = ({ language }) => {
           icon: "/icons/ceremony.svg",
         },
         {
-          time: day_2.events.vespa.time,
-          title: day_2.events.vespa.title,
+          time: day_2.events.cake_cutting.time,
+          title: day_2.events.cake_cutting.title,
           icon: "/icons/cake.svg",
         },
         {

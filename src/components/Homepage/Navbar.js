@@ -326,11 +326,13 @@ const Navbar = ({ language, detectedLanguage, setLanguage }) => {
         <RxHamburgerMenu size={18} />
       </button>
 
-      {/* Language Dropdown */}
-      <LanguageDropdown
-        detectedLanguage={detectedLanguage}
-        setLanguage={setLanguage}
-      />
+      {/* Language Dropdown - Hide on admin page */}
+      {isClient && !window.location.pathname.startsWith('/admin') && (
+        <LanguageDropdown
+          detectedLanguage={detectedLanguage}
+          setLanguage={setLanguage}
+        />
+      )}
 
       {/* Mobile Menu */}
       {renderMobileMenu}

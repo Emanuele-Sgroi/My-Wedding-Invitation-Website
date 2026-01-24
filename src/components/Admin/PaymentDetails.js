@@ -78,44 +78,46 @@ const PaymentDetails = () => {
   };
 
   if (loading) {
-    return <div>Loading payment details...</div>;
+    return <div className="text-lg text-[#d72660]">Đang tải thông tin thanh toán...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="text-lg text-[#d72660]">{error}</div>;
   }
 
   return (
     <div className="w-full flex flex-col jusify-start items-start">
-      <h4 className="font-sans text-neutral-600 font-bold mb-4 text-left">
-        Payment Details
+      <h4 className="text-2xl font-bold mb-6 text-left text-[#d72660]">
+        Thông tin thanh toán
       </h4>
 
       {/* Iterate through payment data and display editable form */}
       {Object.entries(paymentData).map(([currency, details]) => (
         <div
           key={currency}
-          className="w-full border mb-4 p-4 flex flex-col justify-start items-start"
+          className="w-full border-2 border-[#dcb46d] mb-4 p-4 flex flex-col justify-start items-start rounded-lg"
         >
-          <h5 className="font-sans">{currency}</h5>
+          <h5 className="text-xl font-bold text-[#d72660] mb-4">{currency}</h5>
           {Object.entries(details).map(([field, value]) => (
             <div key={field} className="mb-4 w-full max-w-[500px]">
-              <label> {fieldLabels[field] || field}</label>
+              <label className="text-[#d72660] font-semibold mb-1 block">
+                {fieldLabels[field] || field}
+              </label>
               <Input
                 type="text"
                 value={value}
                 onChange={(e) =>
                   handleInputChange(currency, field, e.target.value)
                 }
-                className=" border w-full focus:outline-none focus:ring-0"
+                className="border-2 border-[#dcb46d] w-full focus:outline-none focus:ring-2 focus:ring-[#d72660] bg-[#fffdfc] text-[#d72660]"
               />
             </div>
           ))}
           <button
-            className="p-2 rounded-sm bg-green-900 text-white font-bold"
+            className="p-3 rounded-lg bg-[#dcb46d] hover:bg-[#d72660] text-[#fffdfc] font-bold transition duration-300"
             onClick={() => handleSave(currency)}
           >
-            Save {currency} Details
+            Lưu thông tin {currency}
           </button>
         </div>
       ))}

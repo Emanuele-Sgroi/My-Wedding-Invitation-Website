@@ -15,7 +15,6 @@ export { default as InfoSection } from "./Homepage/InfoSection";
 // Use simple public form for RSVP instead of name search
 export { default as RSVPSection } from "./Homepage/SimpleRSVPSection";
 export { default as RegistrySection } from "./Homepage/RegistrySection";
-export { default as MusicSection } from "./Homepage/MusicSection";
 export { default as AttendingGuestsSection } from "./Homepage/AttendingGuestsSection";
 export { default as Navbar } from "./Homepage/Navbar";
 export { default as Footer } from "./Homepage/Footer";

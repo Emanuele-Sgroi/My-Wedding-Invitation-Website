@@ -34,9 +34,6 @@ import glass from "../../public/icons/glass.png";
 import glasses from "../../public/icons/glasses.png";
 import bell from "../../public/icons/bell.png";
 import collage from "../../public/images/collage.png";
-import musicsect from "../../public/images/musicsect.jpg";
-import spotify from "../../public/icons/spotify.png";
-import spinner from "../../public/icons/spinner.png";
 import la1 from "../../public/images/la1.png";
 import la2 from "../../public/images/la2.png";
 import la3 from "../../public/images/la3.png";
@@ -73,9 +70,6 @@ const images = {
   glasses,
   bell,
   collage,
-  musicsect,
-  spotify,
-  spinner,
   la1,
   la2,
   la3,

@@ -19,6 +19,17 @@ import translations from "@/utils/translations";
 import { Footer } from "@/components";
 
 const AttendingGuestsSection = ({ language }) => {
+  // Variants for framer motion animation
+  const primaryVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  };
+
   // Destructure translation strings
   const {
     title,
@@ -31,17 +42,6 @@ const AttendingGuestsSection = ({ language }) => {
   const [attendingGuests, setAttendingGuests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // Variants for framer motion animation
-  const primaryVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  };
 
   // Fetch attending guests from Firestore
   useEffect(() => {
@@ -108,10 +108,10 @@ const AttendingGuestsSection = ({ language }) => {
 
   return (
     <section
-      id="music-section"
+      id="attending-guests-section"
       className="relative w-full min-h-[120svh] md:min-h-svh bg-center bg-no-repeat bg-cover flex flex-col justify-start overflow-hidden"
       style={{
-        backgroundImage: `url(${images.musicsect.src})`,
+        backgroundImage: `url(${images.collage.src})`,
       }}
     >
       <motion.div
@@ -142,14 +142,7 @@ const AttendingGuestsSection = ({ language }) => {
         {/* Loading State */}
         {loading && (
           <div className="mt-8 flex flex-col items-center">
-            <Image
-              src={images.spinner}
-              alt="Loading..."
-              width={40}
-              height={40}
-              quality={100}
-              className="animate-spin w-[40px] h-[40px]"
-            />
+            <div className="animate-spin w-[40px] h-[40px] border-4 border-gold border-t-transparent rounded-full"></div>
             <p translate="no" className="text-white mt-4">
               {loading_text}
             </p>
@@ -192,7 +185,7 @@ const AttendingGuestsSection = ({ language }) => {
 
             {/* Guests List */}
             {attendingGuests.length > 0 && (
-              <div className="max-h-[50vh] md:max-h-[60vh] overflow-y-auto bg-slate-50/90 backdrop-blur-sm rounded-lg p-4 md:p-6">
+              <div className="max-h-[50vh] md:max-h-[60vh] overflow-y-auto bg-cream/90 backdrop-blur-sm rounded-lg p-4 md:p-6 border border-gold/30">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   {attendingGuests.map((guest, index) => (
                     <motion.div
@@ -201,13 +194,13 @@ const AttendingGuestsSection = ({ language }) => {
                       whileInView="visible"
                       variants={itemVariants}
                       viewport={{ once: true }}
-                      className="bg-white/80 backdrop-blur-sm rounded-lg p-3 md:p-4 shadow-md hover:shadow-lg transition-shadow"
+                      className="bg-white/90 backdrop-blur-sm rounded-lg p-3 md:p-4 shadow-md hover:shadow-lg transition-all duration-300 border border-gold/20 hover:border-gold/50 hover:scale-[1.02]"
                     >
                       <p translate="no" className="text-gray-800 font-semibold text-sm md:text-base">
                         {guest.name}
                       </p>
                       {guest.guestSide && (
-                        <p translate="no" className="text-gray-600 text-xs md:text-sm mt-1">
+                        <p translate="no" className="text-gray-600 text-xs md:text-sm mt-1 italic">
                           {guest.guestSide}
                         </p>
                       )}
